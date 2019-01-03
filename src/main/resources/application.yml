@@ -1,0 +1,247 @@
+#默认使用配置
+spring:
+  profiles:
+    active: dev
+
+#公共配置与profiles选择无关
+mybatis:
+  typeAliasesPackage: com.fang.bigdata.metadata.entity
+  mapperLocations: classpath:com/fang/bigdata/metadata/mybatis/*.xml
+#sql 语句打印
+logging:
+  level:
+    #com.fang.bigdata.metadata.dao: debug
+    com:
+      fang:
+        bigdata:
+          metadata:
+            dao: debug
+            controller: WARN
+  pattern:
+    console: '%d{yyyy/MM/dd-HH:mm:ss} [%thread] %-5level %logger- %msg%n'
+
+---
+
+#开发配置
+spring:
+  profiles:
+    active: dev
+#  datasource:
+#      url: jdbc:mysql://10.16.64.45:3307/bi_data_test?useUnicode=true&characterEncoding=UTF-8
+#      username: bi_test_admin
+#      password: HDFyl3VH
+#      type: com.alibaba.druid.pool.DruidDataSource
+datasource:
+  mysql:
+    driverclass: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.16.64.45:3307/bi_data_test?useUnicode=true&characterEncoding=UTF-8
+    username: bi_test_admin
+    password: HDFyl3VH
+    #    username: bigdata_admin
+    #    password: 62Bs6dux
+    filters: stat
+    maxActive: 200
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  kylin:
+    driverclass: org.apache.kylin.jdbc.Driver
+    url: jdbc:kylin://kylin.light.fang.com:80/searchkeywords
+    username: ADMIN
+    password: KYLIN
+    filters: stat
+    maxActive: 200
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  kylin_newsfb:
+    driverclass: org.apache.kylin.jdbc.Driver
+    url: jdbc:kylin://kylin.light.fang.com:80/newsfbagentstat
+    username: ADMIN
+    password: KYLIN
+    filters: stat
+    maxActive: 200
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: false
+    maxOpenPreparedStatements: 20
+  impala_dwd:
+    driverclass: com.cloudera.impala.jdbc41.Driver
+    url: jdbc:impala://10.16.0.161:21050/dwd
+    username: admin
+    password: admin
+    filters: stat
+    maxActive: 200
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: false
+    maxOpenPreparedStatements: 20
+  ub:
+    driverclass: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://192.168.15.128:1433;DatabaseName=datacenter_test;
+    username: datacenter_test_admin
+    password: dT64Hyv3Sa
+    #    username: bigdata_admin
+    #    password: 62Bs6dux
+    filters: stat
+    maxActive: 200
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+#spring-boot 结合jsp配置
+  #mvc:
+   # view:
+      # 页面默认前缀目录
+    #  prefix: /WEB-INF/jsp/
+      # 响应页面默认后缀
+     # suffix: .jsp
+
+---
+
+#测试配置
+spring:
+  profiles: test
+#  datasource:
+#      url: jdbc:mysql://10.16.64.240:3801/bi_data?useUnicode=true&characterEncoding=UTF-8
+#      username: bi_data_admin
+#      password: QTmQRW9Q
+#      driver-class-name: com.mysql.jdbc.Driver
+#      # 使用druid数据源
+#      type: com.alibaba.druid.pool.DruidDataSource
+datasource:
+  mysql:
+    driverclass: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.16.64.240:3801/bi_data?useUnicode=true&characterEncoding=UTF-8
+    username: bi_data_admin
+    password: QTmQRW9Q
+    #    username: bigdata_admin
+    #    password: 62Bs6dux
+    filters: stat
+    maxActive: 200
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  kylin:
+    driverclass: org.apache.kylin.jdbc.Driver
+    url: jdbc:kylin://kylin.light.fang.com:80/searchkeywords
+    username: ADMIN
+    password: KYLIN
+    filters: stat
+    maxActive: 200
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  kylin_newsfb:
+    driverclass: org.apache.kylin.jdbc.Driver
+    url: jdbc:kylin://kylin.light.fang.com:80/newsfbagentstat
+    username: ADMIN
+    password: KYLIN
+    filters: stat
+    maxActive: 200
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: false
+    maxOpenPreparedStatements: 20
+  impala_dwd:
+    driverclass: com.cloudera.impala.jdbc41.Driver
+    url: jdbc:impala://10.16.0.161:21050/dwd
+    username: admin
+    password: admin
+    filters: stat
+    maxActive: 200
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: false
+    maxOpenPreparedStatements: 20
+  ub:
+    driverclass: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://10.16.69.12:1433;databaseName=ub;
+    username: datacenter_ub_admin
+    password: htMsk5b4
+    #    username: bigdata_admin
+    #    password: 62Bs6dux
+    filters: stat
+    maxActive: 200
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+#server:
+  #ip: 10.16.134.134
+  #port: 8088
+  #不好使 context-path: /sdk

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::commonHeader('im分析详情')"></head>
+
+<SCRIPT>var _speedMark = Date.now()</SCRIPT>
+
+<SCRIPT>
+
+</SCRIPT>
+<DIV class=header th:include="common::commontop" style="height: 60px">
+
+</DIV><!-- 头部 E --><!-- 内容 [[ -->
+<!-- 主区域 [[ -->
+<!--<DIV id=art-content class=content >--><!-- 内容 [[ -->
+
+<STYLE>.add SPAN {
+    CURSOR: pointer;
+    BORDER-TOP: #e7e7e7 1px solid;
+    BORDER-RIGHT: #e7e7e7 1px solid;
+    WIDTH: 12px;
+    BORDER-BOTTOM: #e7e7e7 1px solid;
+    PADDING-BOTTOM: 4px;
+    TEXT-ALIGN: center;
+    PADDING-TOP: 2px;
+    BORDER-LEFT: #e7e7e7 1px solid;
+    DISPLAY: inline-block;
+    LINE-HEIGHT: 0.6;
+    MARGIN-RIGHT: 5px;
+    border-radius: 4px
+}
+
+.two TD:first-child {
+    PADDING-LEFT: 37px
+}
+</STYLE>
+
+<DIV class=content-bd  style="padding-top: 5px;" >
+    <div class="panel" style="padding-left: 300px;padding-right: 300px;" >
+        <ol id="manual" class="manual mb10">
+        <div class="marks-msg with-title" style="padding-left: 0px;">
+            <div class="row" style="padding: 20px 0;">
+                <h3 >消息内容</h3>
+            </div>
+            <!--<div class="row">-->
+                <!--<div class="form-group col-lg-2">-->
+                    <!--<div class="input-group">-->
+                        <!--<span class="input-group-addon">接收人部门id</span>-->
+                        <!--<input class="form-control" type="text"  readonly="true">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group col-lg-2">-->
+                    <!--<div class="input-group">-->
+                        <!--<span class="input-group-addon">发送人</span>-->
+                        <!--<input class="form-control" type="text" readonly="true">-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <DIV class=data-bd>
+                <DIV class="table-wrp with-border">
+                    <TABLE class="table table-hover" >
+                        <tbody>
+                         <TR >
+                             <td width="20%">消息内容</td>
+                             <td width="30%"></td>
+                             <td width="20%"></td>
+                             <td width="30%"></td>
+                         </TR>
+                         <tr>
+                             <td width="20%"></td>
+                             <td width="30%"></td>
+                             <td width="20%"></td>
+                             <td width="30%"></td>
+                         </tr>
+                         <TR >
+                             <td width="20%">消息发送时间</td>
+                             <td th:text="${imdetail.imChatMessageMessagetime}" width="30%"></td>
+                             <td width="20%">城市</td>
+                             <td th:text="${city}" width="30%"></td>
+
+                         </TR>
+
+                         <TR th:if="${imdetail.imChatMessageShopid!=''&amp;&amp;imdetail.imChatMessageShopid!=null}">
+
+                             <td width="20%">涉及到的新房楼盘id</td>
+                             <td th:text="${imdetail.imChatMessageShopid}" width="30%"></td>
+
+                             <td>涉及到的二手房源id</td>
+                             <td th:text="${imdetail.imChatMessageHouseid}"></td>
+
+                         </TR>
+                    </TABLE>
+
+                </DIV>
+            </DIV>
+        </div>
+        <div class="marks-msg with-title" style="padding-left: 0px;">
+            <div class="row" style="padding: 20px 0;">
+                <h3 th:text="'发送方: '"></h3>
+            </div>
+            <DIV class=data-bd>
+                <DIV class="table-wrp with-border">
+                    <TABLE class="table table-hover">
+                        <tbody>
+                         <TR >
+                             <td width="20%">发送人用户名</td>
+                             <td th:text="${imdetail.formFromuser}" width="30%"></td>
+                             <td width="20%">发送人所属业务</td>
+                             <!--<td th:text="${business}" width="30%"></td>-->
+                             <td th:text="${formPre}" width="30%"></td>
+                         </TR>
+                         <TR >
+                             <td >发送人客户端</td>
+                             <td th:text="${clienttype}"></td>
+                             <td>发送方在C端是否电话认证</td>
+                             <td th:text="${imdetail.fromuserPassportidTelauthentication}==1 ? '认证':'未认证'"></td>
+                         </TR>
+                         <span th:if="${imdetail.formPre!='l' &amp;&amp;imdetail.fromuserBid!=null}">
+
+                         <TR >
+                             <td>发送方在B端注册时间</td>
+                             <td th:text="${imdetail.fromuserBidRegistertime}"></td>
+                             <td>发送方在B端所属公司</td>
+                             <td th:text="${imdetail.fromuserBidCompanyname}"></td>
+                         </TR>
+                         <TR >
+                             <td>发送方在B端是否认证</td>
+                             <td th:text="${imdetail.fromuserBidAuthentication}==3 ? '通过':'未通过'"></td>
+                             <td>发送方在B端所属集团</td>
+                             <td th:text="${imdetail.fromuserBidGroup}"></td>
+                         </TR>
+                         <TR >
+                             <td>发送方是否是B端用户</td>
+                             <td th:text="${imdetail.fromuserBid}!=null ? '是':'否' "></td>
+
+                             <td>是否绑定销售</td>
+                             <td th:text="${imdetail.oafromResourceid}!=null ? '是':'否'"></td>
+                         </TR>
+                         <TR >
+                             <td>销售名称</td>
+                             <td th:text="${imdetail.oafromOaLastname}"></td>
+                             <td>销售上级名称</td>
+                             <td th:text="${imdetail.oafromOaManager}"></td>
+                         </TR>
+                         <TR >
+                             <td>销售集团名称</td>
+                             <td th:text="${imdetail.oafromOaSupsubcompany}"></td>
+                             <td>销售公司名称</td>
+                             <td th:text="${imdetail.oafromOaSubcompany}"></td>
+                         </TR>
+                         <TR >
+                             <td>销售部门名称</td>
+                             <td th:text="${imdetail.oafromOaDepartment}"></td>
+                             <td></td>
+                             <td></td>
+                         </TR>
+                         </span>
+                        </tbody>
+                    </TABLE>
+
+                </DIV>
+            </DIV>
+
+        </div>
+        <div class="marks-msg with-title" style="padding-left: 0px;">
+            <div class="row" style="padding: 20px 0;">
+                <h3 th:text="'接收方: '"></h3>
+            </div>
+            <DIV class=data-bd>
+                <DIV class="table-wrp with-border">
+                    <TABLE class="table table-hover" >
+                        <tbody>
+                         <TR >
+                             <td width="20%">接收方用户名</td>
+                             <td th:text="${imdetail.sendtoSendtouser}" width="30%"></td>
+                             <td width="20%">接收方用户类型</td>
+                             <td th:text="${sendtoPre}" width="30%"></td>
+                         </TR>
+                         <TR>
+                             <td>接收方在C端是否电话认证</td>
+                             <td th:text="${imdetail.sendtouserPassportidTelauthentication}==1 ? '认证':'未认证' "></td>
+                             <td></td>
+                             <td></td>
+                         </TR>
+                         <span th:if="${imdetail.sendtoPre!='l' &amp;&amp;imdetail.sendtouserBid!=null}">
+                         <TR >
+                             <td>接收方是否是B端用户</td>
+                             <td th:text="${imdetail.sendtouserBid}!=null ? '是':'否' "></td>
+                             <td>接收方在B端注册时间</td>
+                             <td th:text="${imdetail.sendtouserBidRegistertime}"></td>
+                         </TR>
+                         <TR >
+                             <td>接收方在B端所属公司</td>
+                             <td th:text="${imdetail.sendtouserBidCompanyname}"></td>
+                             <td>接收方在B端是否认证</td>
+                             <td th:text="${imdetail.sendtouserBidAuthentication}==3 ? '通过':'未通过'"></td>
+                         </TR>
+                         <TR >
+                             <td>接收方在B端所属集团</td>
+                             <td th:text="${imdetail.sendtouserBidGroup}"></td>
+                             <td>是否绑定销售</td>
+                             <td th:text="${imdetail.oatoResourceid}!=null ? '是':'否'"></td>
+                         </TR>
+                         <TR >
+                             <td>销售名称</td>
+                             <td th:text="${imdetail.oatoOaLastname}"></td>
+                             <td>销售直接上级名称</td>
+                             <td th:text="${imdetail.oatoOaManager}"></td>
+
+                         </TR>
+                         <TR >
+                             <td>销售集团名称</td>
+                             <td th:text="${imdetail.oatoOaSupsubcompany}"></td>
+                             <td>销售公司名称</td>
+                             <td th:text="${imdetail.oatoOaSubcompany}"></td>
+                         </TR>
+                         <TR >
+                             <td>销售部门名称</td>
+                             <td th:text="${imdetail.oatoOaDepartment}"></td>
+                             <td></td>
+                             <td></td>
+                         </TR>
+                         </span>
+                        </tbody>
+                    </TABLE>
+
+                </DIV>
+            </DIV>
+
+        </div>
+        </ol>
+    </div>
+
+</DIV>
+
+<DIV th:include="common::footer" class=footer>
+</DIV>
+
+</BODY>
+</HTML>

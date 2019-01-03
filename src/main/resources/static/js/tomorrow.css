@@ -1,0 +1,90 @@
+.hljs-comment {
+	COLOR: #8e908c
+}
+.hljs-quote {
+	COLOR: #8e908c
+}
+.hljs-variable {
+	COLOR: #c82829
+}
+.hljs-template-variable {
+	COLOR: #c82829
+}
+.hljs-tag {
+	COLOR: #c82829
+}
+.hljs-name {
+	COLOR: #c82829
+}
+.hljs-selector-id {
+	COLOR: #c82829
+}
+.hljs-selector-class {
+	COLOR: #c82829
+}
+.hljs-regexp {
+	COLOR: #c82829
+}
+.hljs-deletion {
+	COLOR: #c82829
+}
+.hljs-number {
+	COLOR: #f5871f
+}
+.hljs-built_in {
+	COLOR: #f5871f
+}
+.hljs-builtin-name {
+	COLOR: #f5871f
+}
+.hljs-literal {
+	COLOR: #f5871f
+}
+.hljs-type {
+	COLOR: #f5871f
+}
+.hljs-params {
+	COLOR: #f5871f
+}
+.hljs-meta {
+	COLOR: #f5871f
+}
+.hljs-link {
+	COLOR: #f5871f
+}
+.hljs-attribute {
+	COLOR: #eab700
+}
+.hljs-string {
+	COLOR: #718c00
+}
+.hljs-symbol {
+	COLOR: #718c00
+}
+.hljs-bullet {
+	COLOR: #718c00
+}
+.hljs-addition {
+	COLOR: #718c00
+}
+.hljs-title {
+	COLOR: #4271ae
+}
+.hljs-section {
+	COLOR: #4271ae
+}
+.hljs-keyword {
+	COLOR: #8959a8
+}
+.hljs-selector-tag {
+	COLOR: #8959a8
+}
+.hljs {
+	BACKGROUND: #f7f7f7; OVERFLOW-X: auto; COLOR: #4d4d4c; PADDING-BOTTOM: 0.5em; PADDING-TOP: 0.5em; PADDING-LEFT: 0.5em; DISPLAY: block; PADDING-RIGHT: 0.5em
+}
+.hljs-emphasis {
+	FONT-STYLE: italic
+}
+.hljs-strong {
+	FONT-WEIGHT: bold
+}

@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.bigdata.metadata.daoimpala.DwdEffectImMessageMapper">
+  <resultMap id="BaseResultMap" type="com.fang.bigdata.metadata.entity.DwdEffectImMessage">
+    <result column="im_chat_message_messageid" jdbcType="VARCHAR" property="imChatMessageMessageid" />
+    <result column="im_chat_message_form" jdbcType="VARCHAR" property="imChatMessageForm" />
+    <result column="im_chat_message_messagetime" jdbcType="VARCHAR" property="imChatMessageMessagetime" />
+    <result column="im_chat_message_type" jdbcType="VARCHAR" property="imChatMessageType" />
+    <result column="im_chat_message_sendto" jdbcType="VARCHAR" property="imChatMessageSendto" />
+    <result column="im_chat_message_typeid" jdbcType="VARCHAR" property="imChatMessageTypeid" />
+    <result column="im_chat_message_ip" jdbcType="VARCHAR" property="imChatMessageIp" />
+    <result column="im_chat_message_state" jdbcType="VARCHAR" property="imChatMessageState" />
+    <result column="im_chat_message_sendtime" jdbcType="VARCHAR" property="imChatMessageSendtime" />
+    <result column="im_chat_message_clienttype" jdbcType="VARCHAR" property="imChatMessageClienttype" />
+    <result column="im_chat_message_houseid" jdbcType="VARCHAR" property="imChatMessageHouseid" />
+    <result column="im_chat_message_command" jdbcType="VARCHAR" property="imChatMessageCommand" />
+    <result column="im_chat_message_name" jdbcType="VARCHAR" property="imChatMessageName" />
+    <result column="im_chat_message_housetype" jdbcType="VARCHAR" property="imChatMessageHousetype" />
+    <result column="im_chat_message_projname" jdbcType="VARCHAR" property="imChatMessageProjname" />
+    <result column="im_chat_message_customerid" jdbcType="VARCHAR" property="imChatMessageCustomerid" />
+    <result column="im_chat_message_projinfo" jdbcType="VARCHAR" property="imChatMessageProjinfo" />
+    <result column="im_chat_message_business_id" jdbcType="VARCHAR" property="imChatMessageBusinessId" />
+    <result column="im_chat_message_agentid" jdbcType="VARCHAR" property="imChatMessageAgentid" />
+    <result column="im_chat_message_city" jdbcType="VARCHAR" property="imChatMessageCity" />
+    <result column="im_chat_message_shoptype" jdbcType="VARCHAR" property="imChatMessageShoptype" />
+    <result column="im_chat_message_houseprice" jdbcType="VARCHAR" property="imChatMessageHouseprice" />
+    <result column="im_chat_message_shopid" jdbcType="VARCHAR" property="imChatMessageShopid" />
+    <result column="im_chat_message_comarea" jdbcType="VARCHAR" property="imChatMessageComarea" />
+    <result column="im_chat_message_housecity" jdbcType="VARCHAR" property="imChatMessageHousecity" />
+    <result column="im_chat_message_housetitle" jdbcType="VARCHAR" property="imChatMessageHousetitle" />
+    <result column="im_chat_message_purpose" jdbcType="VARCHAR" property="imChatMessagePurpose" />
+    <result column="im_chat_message_agentcity" jdbcType="VARCHAR" property="imChatMessageAgentcity" />
+    <result column="im_chat_message_agentname" jdbcType="VARCHAR" property="imChatMessageAgentname" />
+    <result column="im_chat_message_sendtype" jdbcType="VARCHAR" property="imChatMessageSendtype" />
+    <result column="form_pre" jdbcType="VARCHAR" property="formPre" />
+    <result column="form_fromuser" jdbcType="VARCHAR" property="formFromuser" />
+    <result column="im_chat_message_messagekey" jdbcType="VARCHAR" property="imChatMessageMessagekey" />
+    <result column="sendto_pre" jdbcType="VARCHAR" property="sendtoPre" />
+    <result column="sendto_sendtouser" jdbcType="VARCHAR" property="sendtoSendtouser" />
+    <result column="fromuser_bid" jdbcType="VARCHAR" property="fromuserBid" />
+    <result column="fromuser_bid_city" jdbcType="VARCHAR" property="fromuserBidCity" />
+    <result column="fromuser_bid_registertime" jdbcType="VARCHAR" property="fromuserBidRegistertime" />
+    <result column="fromuser_bid_group" jdbcType="VARCHAR" property="fromuserBidGroup" />
+    <result column="fromuser_bid_company" jdbcType="VARCHAR" property="fromuserBidCompany" />
+    <result column="fromuser_bid_type" jdbcType="VARCHAR" property="fromuserBidType" />
+    <result column="fromuser_bid_authentication" jdbcType="VARCHAR" property="fromuserBidAuthentication" />
+    <result column="fromuser_passportid" jdbcType="VARCHAR" property="fromuserPassportid" />
+    <result column="fromuser_passportid_city" jdbcType="VARCHAR" property="fromuserPassportidCity" />
+    <result column="fromuser_passportid_registertime" jdbcType="VARCHAR" property="fromuserPassportidRegistertime" />
+    <result column="fromuser_passportid_telauthentication" jdbcType="VARCHAR" property="fromuserPassportidTelauthentication" />
+    <result column="sendtouser_bid" jdbcType="VARCHAR" property="sendtouserBid" />
+    <result column="sendtouser_bid_city" jdbcType="VARCHAR" property="sendtouserBidCity" />
+    <result column="sendtouser_bid_group" jdbcType="VARCHAR" property="sendtouserBidGroup" />
+    <result column="sendtouser_bid_registertime" jdbcType="VARCHAR" property="sendtouserBidRegistertime" />
+    <result column="sendtouser_bid_company" jdbcType="VARCHAR" property="sendtouserBidCompany" />
+    <result column="sendtouser_bid_type" jdbcType="VARCHAR" property="sendtouserBidType" />
+    <result column="sendtouser_bid_authentication" jdbcType="VARCHAR" property="sendtouserBidAuthentication" />
+    <result column="sendtouser_passportid" jdbcType="VARCHAR" property="sendtouserPassportid" />
+    <result column="sendtouser_passportid_city" jdbcType="VARCHAR" property="sendtouserPassportidCity" />
+    <result column="sendtouser_passportid_registertime" jdbcType="VARCHAR" property="sendtouserPassportidRegistertime" />
+    <result column="sendtouser_passportid_telauthentication" jdbcType="VARCHAR" property="sendtouserPassportidTelauthentication" />
+    <result column="oafrom_bid" jdbcType="VARCHAR" property="oafromBid" />
+    <result column="oafrom_resourceid" jdbcType="VARCHAR" property="oafromResourceid" />
+    <result column="oafrom_oa_resourceid" jdbcType="VARCHAR" property="oafromOaResourceid" />
+    <result column="oafrom_oa_lastname" jdbcType="VARCHAR" property="oafromOaLastname" />
+    <result column="oafrom_oa_managerid" jdbcType="VARCHAR" property="oafromOaManagerid" />
+    <result column="oafrom_oa_manager" jdbcType="VARCHAR" property="oafromOaManager" />
+    <result column="oafrom_oa_supsubcompanyid" jdbcType="VARCHAR" property="oafromOaSupsubcompanyid" />
+    <result column="oafrom_oa_supsubcompany" jdbcType="VARCHAR" property="oafromOaSupsubcompany" />
+    <result column="oafrom_oa_subcompanyid" jdbcType="VARCHAR" property="oafromOaSubcompanyid" />
+    <result column="oafrom_oa_subcompany" jdbcType="VARCHAR" property="oafromOaSubcompany" />
+    <result column="oafrom_oa_departmentid" jdbcType="VARCHAR" property="oafromOaDepartmentid" />
+    <result column="oafrom_oa_department" jdbcType="VARCHAR" property="oafromOaDepartment" />
+    <result column="oato_bid" jdbcType="VARCHAR" property="oatoBid" />
+    <result column="oato_resourceid" jdbcType="VARCHAR" property="oatoResourceid" />
+    <result column="oato_oa_resourceid" jdbcType="VARCHAR" property="oatoOaResourceid" />
+    <result column="oato_oa_lastname" jdbcType="VARCHAR" property="oatoOaLastname" />
+    <result column="oato_oa_managerid" jdbcType="VARCHAR" property="oatoOaManagerid" />
+    <result column="oato_oa_manager" jdbcType="VARCHAR" property="oatoOaManager" />
+    <result column="oato_oa_supsubcompanyid" jdbcType="VARCHAR" property="oatoOaSupsubcompanyid" />
+    <result column="oato_oa_supsubcompany" jdbcType="VARCHAR" property="oatoOaSupsubcompany" />
+    <result column="oato_oa_subcompanyid" jdbcType="VARCHAR" property="oatoOaSubcompanyid" />
+    <result column="oato_oa_subcompany" jdbcType="VARCHAR" property="oatoOaSubcompany" />
+    <result column="oato_oa_departmentid" jdbcType="VARCHAR" property="oatoOaDepartmentid" />
+    <result column="oato_oa_department" jdbcType="VARCHAR" property="oatoOaDepartment" />
+    <result column="im_chat_message_msgcontent" jdbcType="VARCHAR" property="imChatMessageMsgcontent" />
+    <result column="fromuser_bid_companyname" jdbcType="VARCHAR" property="fromuserBidCompanyname" />
+    <result column="sendtouser_bid_companyname" jdbcType="VARCHAR" property="sendtouserBidCompanyname" />
+    <result column="customcity" jdbcType="VARCHAR" property="customcity" />
+    <result column="im_chat_message_message" jdbcType="VARCHAR" property="imChatMessageMessage" />
+    <result column="project_newcode" jdbcType="BIGINT" property="projectNewcode" />
+    <result column="project_city" jdbcType="VARCHAR" property="projectCity" />
+    <result column="project_district" jdbcType="VARCHAR" property="projectDistrict" />
+    <result column="project_comarea" jdbcType="VARCHAR" property="projectComarea" />
+    <result column="project_projname" jdbcType="VARCHAR" property="projectProjname" />
+    <result column="logday" jdbcType="VARCHAR" property="logday" />
+  </resultMap>
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    im_chat_message_messageid, im_chat_message_form, im_chat_message_messagetime, im_chat_message_type, 
+    im_chat_message_sendto, im_chat_message_typeid, im_chat_message_ip, im_chat_message_state, 
+    im_chat_message_sendtime, im_chat_message_clienttype, im_chat_message_houseid, im_chat_message_command, 
+    im_chat_message_name, im_chat_message_housetype, im_chat_message_projname, im_chat_message_customerid, 
+    im_chat_message_projinfo, im_chat_message_business_id, im_chat_message_agentid, im_chat_message_city, 
+    im_chat_message_shoptype, im_chat_message_houseprice, im_chat_message_shopid, im_chat_message_comarea, 
+    im_chat_message_housecity, im_chat_message_housetitle, im_chat_message_purpose, im_chat_message_agentcity, 
+    im_chat_message_agentname, im_chat_message_sendtype, form_pre, form_fromuser, im_chat_message_messagekey, 
+    sendto_pre, sendto_sendtouser, fromuser_bid, fromuser_bid_city, fromuser_bid_registertime, 
+    fromuser_bid_group, fromuser_bid_company, fromuser_bid_type, fromuser_bid_authentication, 
+    fromuser_passportid, fromuser_passportid_city, fromuser_passportid_registertime, 
+    fromuser_passportid_telauthentication, sendtouser_bid, sendtouser_bid_city, sendtouser_bid_group, 
+    sendtouser_bid_registertime, sendtouser_bid_company, sendtouser_bid_type, sendtouser_bid_authentication, 
+    sendtouser_passportid, sendtouser_passportid_city, sendtouser_passportid_registertime, 
+    sendtouser_passportid_telauthentication, oafrom_bid, oafrom_resourceid, oafrom_oa_resourceid, 
+    oafrom_oa_lastname, oafrom_oa_managerid, oafrom_oa_manager, oafrom_oa_supsubcompanyid, 
+    oafrom_oa_supsubcompany, oafrom_oa_subcompanyid, oafrom_oa_subcompany, oafrom_oa_departmentid, 
+    oafrom_oa_department, oato_bid, oato_resourceid, oato_oa_resourceid, oato_oa_lastname, 
+    oato_oa_managerid, oato_oa_manager, oato_oa_supsubcompanyid, oato_oa_supsubcompany, 
+    oato_oa_subcompanyid, oato_oa_subcompany, oato_oa_departmentid, oato_oa_department, 
+    im_chat_message_msgcontent, fromuser_bid_companyname, sendtouser_bid_companyname, 
+    customcity, im_chat_message_message, logday
+  </sql>
+
+  <insert id="insert" parameterType="com.fang.bigdata.metadata.entity.DwdEffectImMessage">
+    insert into dwd_effect_im_message (im_chat_message_messageid, im_chat_message_form,
+      im_chat_message_messagetime, im_chat_message_type,
+      im_chat_message_sendto, im_chat_message_typeid,
+      im_chat_message_ip, im_chat_message_state, im_chat_message_sendtime,
+      im_chat_message_clienttype, im_chat_message_houseid,
+      im_chat_message_command, im_chat_message_name,
+      im_chat_message_housetype, im_chat_message_projname,
+      im_chat_message_customerid, im_chat_message_projinfo,
+      im_chat_message_business_id, im_chat_message_agentid,
+      im_chat_message_city, im_chat_message_shoptype,
+      im_chat_message_houseprice, im_chat_message_shopid,
+      im_chat_message_comarea, im_chat_message_housecity,
+      im_chat_message_housetitle, im_chat_message_purpose,
+      im_chat_message_agentcity, im_chat_message_agentname,
+      im_chat_message_sendtype, form_pre, form_fromuser,
+      im_chat_message_messagekey, sendto_pre, sendto_sendtouser,
+      fromuser_bid, fromuser_bid_city, fromuser_bid_registertime,
+      fromuser_bid_group, fromuser_bid_company, fromuser_bid_type,
+      fromuser_bid_authentication, fromuser_passportid,
+      fromuser_passportid_city, fromuser_passportid_registertime,
+      fromuser_passportid_telauthentication, sendtouser_bid,
+      sendtouser_bid_city, sendtouser_bid_group,
+      sendtouser_bid_registertime, sendtouser_bid_company,
+      sendtouser_bid_type, sendtouser_bid_authentication,
+      sendtouser_passportid, sendtouser_passportid_city,
+      sendtouser_passportid_registertime, sendtouser_passportid_telauthentication,
+      oafrom_bid, oafrom_resourceid, oafrom_oa_resourceid,
+      oafrom_oa_lastname, oafrom_oa_managerid, oafrom_oa_manager,
+      oafrom_oa_supsubcompanyid, oafrom_oa_supsubcompany,
+      oafrom_oa_subcompanyid, oafrom_oa_subcompany,
+      oafrom_oa_departmentid, oafrom_oa_department,
+      oato_bid, oato_resourceid, oato_oa_resourceid,
+      oato_oa_lastname, oato_oa_managerid, oato_oa_manager,
+      oato_oa_supsubcompanyid, oato_oa_supsubcompany,
+      oato_oa_subcompanyid, oato_oa_subcompany, oato_oa_departmentid,
+      oato_oa_department, im_chat_message_msgcontent,
+      fromuser_bid_companyname, sendtouser_bid_companyname,
+      customcity, logday)
+    values (#{imChatMessageMessageid,jdbcType=VARCHAR}, #{imChatMessageForm,jdbcType=VARCHAR},
+      #{imChatMessageMessagetime,jdbcType=VARCHAR}, #{imChatMessageType,jdbcType=VARCHAR},
+      #{imChatMessageSendto,jdbcType=VARCHAR}, #{imChatMessageTypeid,jdbcType=VARCHAR},
+      #{imChatMessageIp,jdbcType=VARCHAR}, #{imChatMessageState,jdbcType=VARCHAR}, #{imChatMessageSendtime,jdbcType=VARCHAR},
+      #{imChatMessageClienttype,jdbcType=VARCHAR}, #{imChatMessageHouseid,jdbcType=VARCHAR},
+      #{imChatMessageCommand,jdbcType=VARCHAR}, #{imChatMessageName,jdbcType=VARCHAR},
+      #{imChatMessageHousetype,jdbcType=VARCHAR}, #{imChatMessageProjname,jdbcType=VARCHAR},
+      #{imChatMessageCustomerid,jdbcType=VARCHAR}, #{imChatMessageProjinfo,jdbcType=VARCHAR},
+      #{imChatMessageBusinessId,jdbcType=VARCHAR}, #{imChatMessageAgentid,jdbcType=VARCHAR},
+      #{imChatMessageCity,jdbcType=VARCHAR}, #{imChatMessageShoptype,jdbcType=VARCHAR},
+      #{imChatMessageHouseprice,jdbcType=VARCHAR}, #{imChatMessageShopid,jdbcType=VARCHAR},
+      #{imChatMessageComarea,jdbcType=VARCHAR}, #{imChatMessageHousecity,jdbcType=VARCHAR},
+      #{imChatMessageHousetitle,jdbcType=VARCHAR}, #{imChatMessagePurpose,jdbcType=VARCHAR},
+      #{imChatMessageAgentcity,jdbcType=VARCHAR}, #{imChatMessageAgentname,jdbcType=VARCHAR},
+      #{imChatMessageSendtype,jdbcType=VARCHAR}, #{formPre,jdbcType=VARCHAR}, #{formFromuser,jdbcType=VARCHAR},
+      #{imChatMessageMessagekey,jdbcType=VARCHAR}, #{sendtoPre,jdbcType=VARCHAR}, #{sendtoSendtouser,jdbcType=VARCHAR},
+      #{fromuserBid,jdbcType=VARCHAR}, #{fromuserBidCity,jdbcType=VARCHAR}, #{fromuserBidRegistertime,jdbcType=VARCHAR},
+      #{fromuserBidGroup,jdbcType=VARCHAR}, #{fromuserBidCompany,jdbcType=VARCHAR}, #{fromuserBidType,jdbcType=VARCHAR},
+      #{fromuserBidAuthentication,jdbcType=VARCHAR}, #{fromuserPassportid,jdbcType=VARCHAR},
+      #{fromuserPassportidCity,jdbcType=VARCHAR}, #{fromuserPassportidRegistertime,jdbcType=VARCHAR},
+      #{fromuserPassportidTelauthentication,jdbcType=VARCHAR}, #{sendtouserBid,jdbcType=VARCHAR},
+      #{sendtouserBidCity,jdbcType=VARCHAR}, #{sendtouserBidGroup,jdbcType=VARCHAR},
+      #{sendtouserBidRegistertime,jdbcType=VARCHAR}, #{sendtouserBidCompany,jdbcType=VARCHAR},
+      #{sendtouserBidType,jdbcType=VARCHAR}, #{sendtouserBidAuthentication,jdbcType=VARCHAR},
+      #{sendtouserPassportid,jdbcType=VARCHAR}, #{sendtouserPassportidCity,jdbcType=VARCHAR},
+      #{sendtouserPassportidRegistertime,jdbcType=VARCHAR}, #{sendtouserPassportidTelauthentication,jdbcType=VARCHAR},
+      #{oafromBid,jdbcType=VARCHAR}, #{oafromResourceid,jdbcType=VARCHAR}, #{oafromOaResourceid,jdbcType=VARCHAR},
+      #{oafromOaLastname,jdbcType=VARCHAR}, #{oafromOaManagerid,jdbcType=VARCHAR}, #{oafromOaManager,jdbcType=VARCHAR},
+      #{oafromOaSupsubcompanyid,jdbcType=VARCHAR}, #{oafromOaSupsubcompany,jdbcType=VARCHAR},
+      #{oafromOaSubcompanyid,jdbcType=VARCHAR}, #{oafromOaSubcompany,jdbcType=VARCHAR},
+      #{oafromOaDepartmentid,jdbcType=VARCHAR}, #{oafromOaDepartment,jdbcType=VARCHAR},
+      #{oatoBid,jdbcType=VARCHAR}, #{oatoResourceid,jdbcType=VARCHAR}, #{oatoOaResourceid,jdbcType=VARCHAR},
+      #{oatoOaLastname,jdbcType=VARCHAR}, #{oatoOaManagerid,jdbcType=VARCHAR}, #{oatoOaManager,jdbcType=VARCHAR},
+      #{oatoOaSupsubcompanyid,jdbcType=VARCHAR}, #{oatoOaSupsubcompany,jdbcType=VARCHAR},
+      #{oatoOaSubcompanyid,jdbcType=VARCHAR}, #{oatoOaSubcompany,jdbcType=VARCHAR}, #{oatoOaDepartmentid,jdbcType=VARCHAR},
+      #{oatoOaDepartment,jdbcType=VARCHAR}, #{imChatMessageMsgcontent,jdbcType=VARCHAR},
+      #{fromuserBidCompanyname,jdbcType=VARCHAR}, #{sendtouserBidCompanyname,jdbcType=VARCHAR},
+      #{customcity,jdbcType=VARCHAR}, #{logday,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fang.bigdata.metadata.entity.DwdEffectImMessage">
+    insert into dwd_effect_im_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="imChatMessageMessageid != null">
+        im_chat_message_messageid,
+      </if>
+      <if test="imChatMessageForm != null">
+        im_chat_message_form,
+      </if>
+      <if test="imChatMessageMessagetime != null">
+        im_chat_message_messagetime,
+      </if>
+      <if test="imChatMessageType != null">
+        im_chat_message_type,
+      </if>
+      <if test="imChatMessageSendto != null">
+        im_chat_message_sendto,
+      </if>
+      <if test="imChatMessageTypeid != null">
+        im_chat_message_typeid,
+      </if>
+      <if test="imChatMessageIp != null">
+        im_chat_message_ip,
+      </if>
+      <if test="imChatMessageState != null">
+        im_chat_message_state,
+      </if>
+      <if test="imChatMessageSendtime != null">
+        im_chat_message_sendtime,
+      </if>
+      <if test="imChatMessageClienttype != null">
+        im_chat_message_clienttype,
+      </if>
+      <if test="imChatMessageHouseid != null">
+        im_chat_message_houseid,
+      </if>
+      <if test="imChatMessageCommand != null">
+        im_chat_message_command,
+      </if>
+      <if test="imChatMessageName != null">
+        im_chat_message_name,
+      </if>
+      <if test="imChatMessageHousetype != null">
+        im_chat_message_housetype,
+      </if>
+      <if test="imChatMessageProjname != null">
+        im_chat_message_projname,
+      </if>
+      <if test="imChatMessageCustomerid != null">
+        im_chat_message_customerid,
+      </if>
+      <if test="imChatMessageProjinfo != null">
+        im_chat_message_projinfo,
+      </if>
+      <if test="imChatMessageBusinessId != null">
+        im_chat_message_business_id,
+      </if>
+      <if test="imChatMessageAgentid != null">
+        im_chat_message_agentid,
+      </if>
+      <if test="imChatMessageCity != null">
+        im_chat_message_city,
+      </if>
+      <if test="imChatMessageShoptype != null">
+        im_chat_message_shoptype,
+      </if>
+      <if test="imChatMessageHouseprice != null">
+        im_chat_message_houseprice,
+      </if>
+      <if test="imChatMessageShopid != null">
+        im_chat_message_shopid,
+      </if>
+      <if test="imChatMessageComarea != null">
+        im_chat_message_comarea,
+      </if>
+      <if test="imChatMessageHousecity != null">
+        im_chat_message_housecity,
+      </if>
+      <if test="imChatMessageHousetitle != null">
+        im_chat_message_housetitle,
+      </if>
+      <if test="imChatMessagePurpose != null">
+        im_chat_message_purpose,
+      </if>
+      <if test="imChatMessageAgentcity != null">
+        im_chat_message_agentcity,
+      </if>
+      <if test="imChatMessageAgentname != null">
+        im_chat_message_agentname,
+      </if>
+      <if test="imChatMessageSendtype != null">
+        im_chat_message_sendtype,
+      </if>
+      <if test="formPre != null">
+        form_pre,
+      </if>
+      <if test="formFromuser != null">
+        form_fromuser,
+      </if>
+      <if test="imChatMessageMessagekey != null">
+        im_chat_message_messagekey,
+      </if>
+      <if test="sendtoPre != null">
+        sendto_pre,
+      </if>
+      <if test="sendtoSendtouser != null">
+        sendto_sendtouser,
+      </if>
+      <if test="fromuserBid != null">
+        fromuser_bid,
+      </if>
+      <if test="fromuserBidCity != null">
+        fromuser_bid_city,
+      </if>
+      <if test="fromuserBidRegistertime != null">
+        fromuser_bid_registertime,
+      </if>
+      <if test="fromuserBidGroup != null">
+        fromuser_bid_group,
+      </if>
+      <if test="fromuserBidCompany != null">
+        fromuser_bid_company,
+      </if>
+      <if test="fromuserBidType != null">
+        fromuser_bid_type,
+      </if>
+      <if test="fromuserBidAuthentication != null">
+        fromuser_bid_authentication,
+      </if>
+      <if test="fromuserPassportid != null">
+        fromuser_passportid,
+      </if>
+      <if test="fromuserPassportidCity != null">
+        fromuser_passportid_city,
+      </if>
+      <if test="fromuserPassportidRegistertime != null">
+        fromuser_passportid_registertime,
+      </if>
+      <if test="fromuserPassportidTelauthentication != null">
+        fromuser_passportid_telauthentication,
+      </if>
+      <if test="sendtouserBid != null">
+        sendtouser_bid,
+      </if>
+      <if test="sendtouserBidCity != null">
+        sendtouser_bid_city,
+      </if>
+      <if test="sendtouserBidGroup != null">
+        sendtouser_bid_group,
+      </if>
+      <if test="sendtouserBidRegistertime != null">
+        sendtouser_bid_registertime,
+      </if>
+      <if test="sendtouserBidCompany != null">
+        sendtouser_bid_company,
+      </if>
+      <if test="sendtouserBidType != null">
+        sendtouser_bid_type,
+      </if>
+      <if test="sendtouserBidAuthentication != null">
+        sendtouser_bid_authentication,
+      </if>
+      <if test="sendtouserPassportid != null">
+        sendtouser_passportid,
+      </if>
+      <if test="sendtouserPassportidCity != null">
+        sendtouser_passportid_city,
+      </if>
+      <if test="sendtouserPassportidRegistertime != null">
+        sendtouser_passportid_registertime,
+      </if>
+      <if test="sendtouserPassportidTelauthentication != null">
+        sendtouser_passportid_telauthentication,
+      </if>
+      <if test="oafromBid != null">
+        oafrom_bid,
+      </if>
+      <if test="oafromResourceid != null">
+        oafrom_resourceid,
+      </if>
+      <if test="oafromOaResourceid != null">
+        oafrom_oa_resourceid,
+      </if>
+      <if test="oafromOaLastname != null">
+        oafrom_oa_lastname,
+      </if>
+      <if test="oafromOaManagerid != null">
+        oafrom_oa_managerid,
+      </if>
+      <if test="oafromOaManager != null">
+        oafrom_oa_manager,
+      </if>
+      <if test="oafromOaSupsubcompanyid != null">
+        oafrom_oa_supsubcompanyid,
+      </if>
+      <if test="oafromOaSupsubcompany != null">
+        oafrom_oa_supsubcompany,
+      </if>
+      <if test="oafromOaSubcompanyid != null">
+        oafrom_oa_subcompanyid,
+      </if>
+      <if test="oafromOaSubcompany != null">
+        oafrom_oa_subcompany,
+      </if>
+      <if test="oafromOaDepartmentid != null">
+        oafrom_oa_departmentid,
+      </if>
+      <if test="oafromOaDepartment != null">
+        oafrom_oa_department,
+      </if>
+      <if test="oatoBid != null">
+        oato_bid,
+      </if>
+      <if test="oatoResourceid != null">
+        oato_resourceid,
+      </if>
+      <if test="oatoOaResourceid != null">
+        oato_oa_resourceid,
+      </if>
+      <if test="oatoOaLastname != null">
+        oato_oa_lastname,
+      </if>
+      <if test="oatoOaManagerid != null">
+        oato_oa_managerid,
+      </if>
+      <if test="oatoOaManager != null">
+        oato_oa_manager,
+      </if>
+      <if test="oatoOaSupsubcompanyid != null">
+        oato_oa_supsubcompanyid,
+      </if>
+      <if test="oatoOaSupsubcompany != null">
+        oato_oa_supsubcompany,
+      </if>
+      <if test="oatoOaSubcompanyid != null">
+        oato_oa_subcompanyid,
+      </if>
+      <if test="oatoOaSubcompany != null">
+        oato_oa_subcompany,
+      </if>
+      <if test="oatoOaDepartmentid != null">
+        oato_oa_departmentid,
+      </if>
+      <if test="oatoOaDepartment != null">
+        oato_oa_department,
+      </if>
+      <if test="imChatMessageMsgcontent != null">
+        im_chat_message_msgcontent,
+      </if>
+      <if test="fromuserBidCompanyname != null">
+        fromuser_bid_companyname,
+      </if>
+      <if test="sendtouserBidCompanyname != null">
+        sendtouser_bid_companyname,
+      </if>
+      <if test="customcity != null">
+        customcity,
+      </if>
+      <if test="logday != null">
+        logday,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="imChatMessageMessageid != null">
+        #{imChatMessageMessageid,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageForm != null">
+        #{imChatMessageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageMessagetime != null">
+        #{imChatMessageMessagetime,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageType != null">
+        #{imChatMessageType,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageSendto != null">
+        #{imChatMessageSendto,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageTypeid != null">
+        #{imChatMessageTypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageIp != null">
+        #{imChatMessageIp,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageState != null">
+        #{imChatMessageState,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageSendtime != null">
+        #{imChatMessageSendtime,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageClienttype != null">
+        #{imChatMessageClienttype,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageHouseid != null">
+        #{imChatMessageHouseid,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageCommand != null">
+        #{imChatMessageCommand,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageName != null">
+        #{imChatMessageName,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageHousetype != null">
+        #{imChatMessageHousetype,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageProjname != null">
+        #{imChatMessageProjname,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageCustomerid != null">
+        #{imChatMessageCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageProjinfo != null">
+        #{imChatMessageProjinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageBusinessId != null">
+        #{imChatMessageBusinessId,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageAgentid != null">
+        #{imChatMessageAgentid,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageCity != null">
+        #{imChatMessageCity,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageShoptype != null">
+        #{imChatMessageShoptype,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageHouseprice != null">
+        #{imChatMessageHouseprice,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageShopid != null">
+        #{imChatMessageShopid,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageComarea != null">
+        #{imChatMessageComarea,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageHousecity != null">
+        #{imChatMessageHousecity,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageHousetitle != null">
+        #{imChatMessageHousetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessagePurpose != null">
+        #{imChatMessagePurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageAgentcity != null">
+        #{imChatMessageAgentcity,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageAgentname != null">
+        #{imChatMessageAgentname,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageSendtype != null">
+        #{imChatMessageSendtype,jdbcType=VARCHAR},
+      </if>
+      <if test="formPre != null">
+        #{formPre,jdbcType=VARCHAR},
+      </if>
+      <if test="formFromuser != null">
+        #{formFromuser,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageMessagekey != null">
+        #{imChatMessageMessagekey,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtoPre != null">
+        #{sendtoPre,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtoSendtouser != null">
+        #{sendtoSendtouser,jdbcType=VARCHAR},
+      </if>
+      <if test="fromuserBid != null">
+        #{fromuserBid,jdbcType=VARCHAR},
+      </if>
+      <if test="fromuserBidCity != null">
+        #{fromuserBidCity,jdbcType=VARCHAR},
+      </if>
+      <if test="fromuserBidRegistertime != null">
+        #{fromuserBidRegistertime,jdbcType=VARCHAR},
+      </if>
+      <if test="fromuserBidGroup != null">
+        #{fromuserBidGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="fromuserBidCompany != null">
+        #{fromuserBidCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="fromuserBidType != null">
+        #{fromuserBidType,jdbcType=VARCHAR},
+      </if>
+      <if test="fromuserBidAuthentication != null">
+        #{fromuserBidAuthentication,jdbcType=VARCHAR},
+      </if>
+      <if test="fromuserPassportid != null">
+        #{fromuserPassportid,jdbcType=VARCHAR},
+      </if>
+      <if test="fromuserPassportidCity != null">
+        #{fromuserPassportidCity,jdbcType=VARCHAR},
+      </if>
+      <if test="fromuserPassportidRegistertime != null">
+        #{fromuserPassportidRegistertime,jdbcType=VARCHAR},
+      </if>
+      <if test="fromuserPassportidTelauthentication != null">
+        #{fromuserPassportidTelauthentication,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtouserBid != null">
+        #{sendtouserBid,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtouserBidCity != null">
+        #{sendtouserBidCity,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtouserBidGroup != null">
+        #{sendtouserBidGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtouserBidRegistertime != null">
+        #{sendtouserBidRegistertime,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtouserBidCompany != null">
+        #{sendtouserBidCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtouserBidType != null">
+        #{sendtouserBidType,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtouserBidAuthentication != null">
+        #{sendtouserBidAuthentication,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtouserPassportid != null">
+        #{sendtouserPassportid,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtouserPassportidCity != null">
+        #{sendtouserPassportidCity,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtouserPassportidRegistertime != null">
+        #{sendtouserPassportidRegistertime,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtouserPassportidTelauthentication != null">
+        #{sendtouserPassportidTelauthentication,jdbcType=VARCHAR},
+      </if>
+      <if test="oafromBid != null">
+        #{oafromBid,jdbcType=VARCHAR},
+      </if>
+      <if test="oafromResourceid != null">
+        #{oafromResourceid,jdbcType=VARCHAR},
+      </if>
+      <if test="oafromOaResourceid != null">
+        #{oafromOaResourceid,jdbcType=VARCHAR},
+      </if>
+      <if test="oafromOaLastname != null">
+        #{oafromOaLastname,jdbcType=VARCHAR},
+      </if>
+      <if test="oafromOaManagerid != null">
+        #{oafromOaManagerid,jdbcType=VARCHAR},
+      </if>
+      <if test="oafromOaManager != null">
+        #{oafromOaManager,jdbcType=VARCHAR},
+      </if>
+      <if test="oafromOaSupsubcompanyid != null">
+        #{oafromOaSupsubcompanyid,jdbcType=VARCHAR},
+      </if>
+      <if test="oafromOaSupsubcompany != null">
+        #{oafromOaSupsubcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="oafromOaSubcompanyid != null">
+        #{oafromOaSubcompanyid,jdbcType=VARCHAR},
+      </if>
+      <if test="oafromOaSubcompany != null">
+        #{oafromOaSubcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="oafromOaDepartmentid != null">
+        #{oafromOaDepartmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="oafromOaDepartment != null">
+        #{oafromOaDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="oatoBid != null">
+        #{oatoBid,jdbcType=VARCHAR},
+      </if>
+      <if test="oatoResourceid != null">
+        #{oatoResourceid,jdbcType=VARCHAR},
+      </if>
+      <if test="oatoOaResourceid != null">
+        #{oatoOaResourceid,jdbcType=VARCHAR},
+      </if>
+      <if test="oatoOaLastname != null">
+        #{oatoOaLastname,jdbcType=VARCHAR},
+      </if>
+      <if test="oatoOaManagerid != null">
+        #{oatoOaManagerid,jdbcType=VARCHAR},
+      </if>
+      <if test="oatoOaManager != null">
+        #{oatoOaManager,jdbcType=VARCHAR},
+      </if>
+      <if test="oatoOaSupsubcompanyid != null">
+        #{oatoOaSupsubcompanyid,jdbcType=VARCHAR},
+      </if>
+      <if test="oatoOaSupsubcompany != null">
+        #{oatoOaSupsubcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="oatoOaSubcompanyid != null">
+        #{oatoOaSubcompanyid,jdbcType=VARCHAR},
+      </if>
+      <if test="oatoOaSubcompany != null">
+        #{oatoOaSubcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="oatoOaDepartmentid != null">
+        #{oatoOaDepartmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="oatoOaDepartment != null">
+        #{oatoOaDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="imChatMessageMsgcontent != null">
+        #{imChatMessageMsgcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="fromuserBidCompanyname != null">
+        #{fromuserBidCompanyname,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtouserBidCompanyname != null">
+        #{sendtouserBidCompanyname,jdbcType=VARCHAR},
+      </if>
+      <if test="customcity != null">
+        #{customcity,jdbcType=VARCHAR},
+      </if>
+      <if test="logday != null">
+        #{logday,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="queryByImChatMessageMessageid" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from dwd_effect_im_message
+    where im_chat_message_messageid = #{imChatMessageMessageid}
+    and logday= #{logday}
+    limit 1
+  </select>
+
+  <select id="queryPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> from dwd_effect_im_message t
+    where 1=1
+    <if test='city != null and city != "" '>
+      and t.customcity = #{city}
+    </if>
+    <if test='qx != null and qx != "" '>
+      and t.project_district = #{qx}
+    </if>
+    <if test='sq != null and sq != "" '>
+      and t.project_comarea like concat(concat('%',#{sq}),'%')
+    </if>
+    <if test='imChatMessageType != null and imChatMessageType != "" '>
+      and t.im_chat_message_type=#{imChatMessageType}
+    </if>
+    and t.logday <![CDATA[>= ]]> #{startTime}
+    and t.logday <![CDATA[<= ]]> #{endTime}
+    <if test='imChatMessageShopid != null and imChatMessageShopid!="" '>
+      and t.im_chat_message_shopid = #{imChatMessageShopid,jdbcType=VARCHAR}
+    </if>
+    <if test='passportid != null and passportid != "" '>
+      and (t.sendtouser_passportid = #{passportid} or t.fromuser_passportid = #{passportid})
+    </if>
+    order by im_chat_message_messageid desc
+    limit #{pageSize} offset #{rows}
+  </select>
+  <select id="queryCounts" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(1) from dwd_effect_im_message t
+    where 1=1
+    <if test='city != null and city != "" '>
+      and t.customcity = #{city}
+    </if>
+    <if test='qx != null and qx != "" '>
+      and t.project_district = #{qx}
+    </if>
+    <if test='sq != null and sq != "" '>
+      and t.project_comarea like concat(concat('%',#{sq}),'%')
+    </if>
+    <if test='imChatMessageType != null and imChatMessageType != "" '>
+      and t.im_chat_message_type=#{imChatMessageType}
+    </if>
+    and t.logday <![CDATA[>= ]]> #{startTime}
+    and t.logday <![CDATA[<= ]]> #{endTime}
+    <if test='imChatMessageShopid != null and imChatMessageShopid!="" '>
+      and t.im_chat_message_shopid = #{imChatMessageShopid,jdbcType=VARCHAR}
+    </if>
+    <if test='passportid != null and passportid != "" '>
+      and (t.sendtouser_passportid = #{passportid} or t.fromuser_passportid = #{passportid})
+    </if>
+  </select>
+
+  <select id="uvInBestHour" parameterType="java.util.Map" resultType="java.lang.String">
+    select hour(im_chat_message_messagetime)
+    from dwd.dwd_effect_im_message
+    where logday <![CDATA[>= ]]> #{startTime}
+    and logday <![CDATA[<= ]]> #{endTime} and customcity = #{city}
+    group by customcity, hour(im_chat_message_messagetime)
+    order by count(im_chat_message_messageid) desc
+    limit 2
+  </select>
+
+  <select id="uvInBestWeek" parameterType="java.util.Map" resultType="java.lang.String">
+    select dayofweek(im_chat_message_messagetime) as week
+    from dwd.dwd_effect_im_message
+    where logday <![CDATA[>= ]]> #{startTime}
+    and logday <![CDATA[<= ]]> #{endTime} and customcity = #{city}
+    group by customcity, dayofweek(im_chat_message_messagetime)
+    order by count(im_chat_message_messageid) desc
+    limit 2
+  </select>
+</mapper>

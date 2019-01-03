@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.bigdata.metadata.daoimpala.ImStaticsProjnameMapper">
+
+
+    <select id="getTop10UvCountByProjName" resultType="com.fang.bigdata.metadata.entity.imstatics.ProjnameImEntity">
+        select straight_join a.projname,a.city,sum(b.imchat) as imchats  from default.newhouse_proj_info_external as a 
+        join (
+          select count(im_chat_message_messageid) as imchat,im_chat_message_shopid from dwd.dwd_effect_im_message
+          where logday <![CDATA[>= ]]> #{startDay} and logday <![CDATA[<= ]]> #{endDay}
+          and im_chat_message_shopid is not null and im_chat_message_shopid !=''
+          group by im_chat_message_shopid,project_city
+          order by count(im_chat_message_messageid) desc
+        ) as b where a.newcode = b.im_chat_message_shopid 
+        group by a.projname,a.city
+        order by imchats desc limit 10
+    </select>
+</mapper>

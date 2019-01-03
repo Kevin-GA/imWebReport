@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="commonHeader(title)">
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/table/bootstrap-table.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" media="screen">
+    <link th:href="@{/select/css/hsCheckData.css}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" th:href="@{/im_index/style/index.css}" />
+    <!--<link th:href="@{/bootstrap-select/bootstrap-select.min.css}" rel="stylesheet" type="text/css"/>-->
+    <!--<script type="text/javascript" th:src="@{/bootstrap-select/bootstrap-select.min.js}"></script>-->
+    <!--<script type="text/javascript" th:src="@{/bootstrap-select/js/i18n/defaults-zh_CN.min.js}"></script>-->
+    <!--<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>-->
+    <!--<link th:href="@{/table/bootstrap-table.min.css}" rel="stylesheet" type="text/css"/>-->
+    <!--<script type="text/javascript" th:src="@{/js/jquery-1.7.2.min.js}"></script>-->
+    <script type="text/javascript" th:src="@{/js/jquery-2.1.1.min.js}"></script>
+    <!--<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>-->
+
+    <script type="text/javascript" th:src="@{/js/jquery.highlight.js}"></script>
+    <!--bootstrap-table-->
+    <script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
+
+    <script type="text/javascript" th:src="@{/js/echarts.min.js}"></script>
+    <style>
+        .highlight {
+            background-color: #FF0000;
+        }
+        .STYLE1 {
+
+            font-weight: bold;
+        }
+    </style>
+    <SCRIPT type=text/javascript>
+        var _speedMark = new Date();
+    </SCRIPT>
+    <!--<script src="../static/js/jquery-1.7.2.min.js"></script>-->
+</head>
+<body>
+<DIV th:fragment="commonNav(flag,name)" class=sidebar>
+    <DIV class=menu>
+        <DIV class=menu-hd>
+            <H3><I class=type-ico></I>指标整理</H3></DIV>
+        <DIV class=munu-bd>
+            <DL id=2  th:class="${flag==2}?'open'">
+                <DT><A href="javascript:;"><I class=ico-arrows></I>指标</A></DT>
+                <DD th:class="${name=='指标查询'}?'on'"><A href="/xueyuan">指标查询</A></DD>
+                <DD th:class="${name=='源数据管理'}?'on'"><A href="/metadata">源数据管理</A></DD>
+                <DD th:class="${name=='DWD管理'}?'on'"><A href="/dwd">DWD管理</A></DD>
+
+ <!--               <DD th:class="${name=='page_id命名规范'}?'on'"><A href="/ymbh.html">page_id命名规范</A></DD>
+                <DD th:class="${name=='短标签检索'}?'on'"><A href="/sdk/general-tagshortname.html">短标签检索</A></DD>
+                <DD th:class="${name=='埋码文档格式规范'}?'on'"><A href="/sdk/general-specification.html">埋码文档格式规范</A></DD>-->
+            </DL>
+            <DL id=3  th:class="${flag==3}?'open'">
+                <DT><A href="javascript:;"><I class=ico-arrows></I>数据项</A></DT>
+                <DD th:class="${name=='房源'}?'on'"><A href="/ODSIndexNum1">房源</A></DD>
+                <DD th:class="${name=='线索'}?'on'"><A href="/ODSIndexNum2">线索</A></DD>
+                <DD th:class="${name=='IM聊天数'}?'on'"><A href="/ODSIndexNum3">IM聊天数</A></DD>
+                <DD th:class="${name=='电话'}?'on'"><A href="/ODSIndexNum4">电话</A></DD>
+                <DD th:class="${name=='账户'}?'on'"><A href="/ODSIndexNum5">账户</A></DD>
+                <DD th:class="${name=='im首页'}?'on'"><A href="/dataItem/imIndex">im首页</A></DD>
+            </DL>
+<!--            <DL id=3  th:class="${flag==3}?'open'">
+                <DT><A href="javascript:;"><I class=ico-arrows></I>pc&wap埋码</A></DT>
+                <DD th:class="${name=='流量统计埋码'}?'on'"><A href="/sdk/pc-pvuv.html">流量统计埋码</A></DD>
+                <DD th:class="${name=='用户行为收集埋码'}?'on'"> <A href="/sdk/pc-ub.html">用户行为收集埋码</A></DD>
+                <DD th:class="${name=='曝光量统计埋码'}?'on'"><A href="/sdk/pc-bg.html">曝光量统计埋码</A></DD>
+                <DD th:class="${name=='点击热力图埋码'}?'on'"><A href="/sdk/pc-click.html">点击热力图埋码</A></DD>
+            </DL>
+            <DL id=4 th:class="${flag==4}?'open'">
+                <DT><A href="javascript:;"><I class=ico-arrows></I>app埋码</A></DT>
+                <DD th:class="${name=='appios'}?'on'"><A href="/sdk/app-ios.html">IOS埋码</A></DD>
+                <DD th:class="${name=='appandroid'}?'on'"><A href="/sdk/app-android.html">Android埋码</A></DD>
+                &lt;!&ndash;<DD th:class="${name=='app埋码流量统计埋码'}?'on'"><A href="/sdk/app-pvuv.html">流量统计埋码</A></DD>&ndash;&gt;
+                &lt;!&ndash;<DD th:class="${name=='app埋码用户行为收集埋码'}?'on'"> <A href="/sdk/app-ub.html">用户行为收集埋码</A></DD>&ndash;&gt;
+                &lt;!&ndash;<DD th:class="${name=='app埋码曝光量统计埋码'}?'on'"><A href="/sdk/app-bg.html">曝光量统计埋码</A></DD>&ndash;&gt;
+                &lt;!&ndash;<DD th:class="${name=='app埋码点击热力图埋码'}?'on'"><A href="/sdk/app-fa.html">点击热力图埋码</A></DD>&ndash;&gt;
+            </DL>
+            <DL id=5 th:class="${flag==5}?'open'">
+                <DT><A href="javascript:;"><I class=ico-arrows></I>三朵云埋码</A></DT>
+                &lt;!&ndash;<DD th:class="${name=='三朵云埋码流量统计埋码'}?'on'"><A href="/yun-pv.html">流量统计埋码</A></DD>&ndash;&gt;
+                <DD th:class="${name=='三朵云埋码用户行为收集埋码'}?'on'"> <A href="/sdk/yun-ub.html">流量统计&用户行为收</A></DD>
+                <DD th:class="${name=='三朵云埋码用户行为收集埋码'}?'on'"> <A href="/sdk/yun-ub.html">集埋码</A></DD>
+                <DD th:class="${name=='三朵云埋码曝光量统计埋码'}?'on'"><A href="/sdk/yun-bg.html">曝光量统计埋码</A></DD>
+                <DD th:class="${name=='三朵云埋码点击热力图埋码'}?'on'"><A href="/sdk/yun-click.html">点击热力图埋码</A></DD>
+            </DL>-->
+
+<!--            <DL id=11 class=single>
+                <DD><A href="#"><I
+                        class=ico-arrows></I>统计代码地址</A></DD>
+                <DD><A
+                        href="#"><I
+                        class=ico-arrows></I>联系我们 </A></DD>
+            </DL>-->
+        </DIV>
+    </DIV>
+</DIV>
+
+
+    <DIV th:fragment="commontop" class=wrap style="height: 2000px">
+        <DIV class=logo>
+            <H1 class=main-logo>
+                <A title=血缘指标文档 href="#">血缘指标文档</A>
+            </H1>(临时)
+
+        </DIV>
+        <DIV class=link>
+            <A href="#" target=_blank>指标文档首页</A>
+            <I class=vs>|</I>
+            <DIV class="dropdown-box showPopUpJS">
+                <A class=dropdown-head href="javascript:;">帮助中心<SPAN class=dropdown-arrow></SPAN></A>
+                <DIV class=dropdown-body>
+                    <UL>
+                        <LI class=kefu>
+                            <P class=tel>技术支持：杨洪旺</P>
+                            <P class=time>周一到周五 09:00-18:00</P>
+                        </LI>
+
+                    </UL>
+                </DIV>
+            </DIV>
+        </DIV>
+    </DIV>
+
+<!--<DIV class="query hide">-->
+    <!--<DIV class="wrap tr">-->
+        <!--<DIV class=postion></DIV>-->
+    <!--</DIV>-->
+<!--</DIV>-->
+
+
+<DIV th:fragment="footer"  class=footer>
+    <DIV class=wrap style="margin-bottom: 100px">
+        <!--<P><A href="#"-->
+              <!--target=_blank>关于搜房大数据</A><I class=vs>|</I><SPAN>Powered By Fang-->
+<!--　Copyright©-->
+<!--<SCRIPT>-->
+<!--var year = "";-->
+<!--mydate = new Date();-->
+<!--myyear = mydate.getYear();-->
+<!--year = (myyear > 200) ? myyear : 1900 + myyear;-->
+<!--document.write(year);-->
+<!--</SCRIPT>-->
+  <!--All Rights Reserved.</SPAN></P>-->
+    </DIV>
+
+    <SCRIPT src="/js/CateNav.js"></SCRIPT>
+
+    <SCRIPT type=text/javascript>
+        $(function () {
+            $.CateNav('#art-content', '#Catalog-box');//第一个参数为存放文章内容的box,第二个参数为存放生成目录的box
+            if (document.body.clientWidth < 1300) {
+                $(".page-right").addClass("hide")
+            }
+
+        })
+    </SCRIPT>
+
+    <SCRIPT>TA_STATS_ARGS = {}</SCRIPT>
+
+
+    <LINK rel=stylesheet href="/css/tomorrow.css">
+    <SCRIPT src="/js/jquery.highlight.js"></SCRIPT>
+
+    <SCRIPT>hljs.initHighlightingOnLoad();</SCRIPT>
+</DIV>
+
+</body>
+</html>

@@ -1,0 +1,836 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.bigdata.metadata.dao.ImStaticsMapper">
+
+    <resultMap id="BaseResultMap" type="com.fang.bigdata.metadata.entity.CityPercentageEntity">
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="listIndexRatio" property="listIndexRatio" jdbcType="VARCHAR" />
+        <result column="detailListRatio" property="detailListRatio" jdbcType="VARCHAR" />
+        <result column="detailImRatio" property="detailImRatio" jdbcType="VARCHAR" />
+        <result column="validSessionRatio" property="validSessionRatio" jdbcType="VARCHAR" />
+        <result column="invalidSessionRatio" property="invalidSessionRatio" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getCityPercentage1" resultMap="BaseResultMap">
+        select city,round(sum(listcount)/sum(indexcount)*100,2) AS listIndexRatio,
+        round(sum(detailcount)/sum(listcount)*100,2) AS detailListRatio,
+        round(sum(imcount)/sum(detailcount)*100,2) AS detailImRatio,
+        round(sum(validsessioncount)/sum(sessioncount)*100,2) AS validSessionRatio,
+        round(sum(invalidsessioncount)/sum(sessioncount)*100,2) AS invalidSessionRatio
+        from
+        (select city,sum(uv) as indexcount,0 as listcount,0 as detailcount,0 as imcount, 0 as sessioncount,0 as
+        validsessioncount,0 as invalidsessioncount
+        from bigdata_im_statics_pageuv_chat
+        where city in
+        <foreach collection="citys" open="(" close=")" separator="," item="city">
+            #{city}
+        </foreach>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='首页'
+        group by city
+        union all
+        select city,0 as indexcount,sum(uv) as listcount,0 as detailcount,0 as imcount, 0 as sessioncount,0 as
+        validsessioncount,0 as invalidsessioncount
+        from bigdata_im_statics_pageuv_chat
+        where city in
+        <foreach collection="citys" open="(" close=")" separator="," item="city">
+            #{city}
+        </foreach>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='列表页'
+        group by city
+        union all
+        select city,0 as indexcount,0 as listcount,sum(uv) as detailcount,0 as imcount, 0 as sessioncount,0 as
+        validsessioncount,0 as invalidsessioncount
+        from bigdata_im_statics_pageuv_chat
+        where city in
+        <foreach collection="citys" open="(" close=")" separator="," item="city">
+            #{city}
+        </foreach>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='详情页'
+        group by city
+        union all
+        select city,0 as indexcount,0 as listcount,0 as detailcount,sum(uv) as imcount, 0 as sessioncount,0 as
+        validsessioncount,0 as invalidsessioncount
+        from bigdata_im_statics_pageuv_chat
+        where city in
+        <foreach collection="citys" open="(" close=")" separator="," item="city">
+            #{city}
+        </foreach>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='im点击人数'
+        group by city
+        union all
+        select city,0 as indexcount,0 as listcount,0 as detailcount,0 as imcount, sum(uv) as sessioncount,0 as
+        validsessioncount,0 as invalidsessioncount
+        from bigdata_im_statics_pageuv_chat
+        where city in
+        <foreach collection="citys" open="(" close=")" separator="," item="city">
+            #{city}
+        </foreach>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='会话总数'
+        group by city
+        union all
+        select city,0 as indexcount,0 as listcount,0 as detailcount,0 as imcount,0 as sessioncount,sum(uv) as
+        validsessioncount,0 as invalidsessioncount
+        from bigdata_im_statics_pageuv_chat
+        where city in
+        <foreach collection="citys" open="(" close=")" separator="," item="city">
+            #{city}
+        </foreach>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='有反馈会话数'
+        group by city
+        union all
+        select city,0 as indexcount,0 as listcount,0 as detailcount,0 as imcount,0 as sessioncount,0 as
+        validsessioncount,sum(uv) as invalidsessioncount
+        from bigdata_im_statics_pageuv_chat
+        where city in
+        <foreach collection="citys" open="(" close=")" separator="," item="city">
+            #{city}
+        </foreach>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='无反馈会话数'
+        group by city
+        )a
+        group by city
+    </select>
+
+    <select id="getCityPercentage2" resultType="com.fang.bigdata.metadata.entity.BusinessPercentageEntity">
+        SELECT producttype AS business
+        , round(SUM(listcount) / SUM(indexcount) * 100, 2) AS listIndexRatio
+        , round(SUM(detailcount) / SUM(listcount) * 100, 2) AS detailListRatio
+        , round(SUM(imcount) / SUM(detailcount) * 100, 2) AS detailImRatio
+        , round(SUM(validsessioncount) / SUM(sessioncount) * 100, 2) AS validSessionRatio
+        , round(SUM(invalidsessioncount) / SUM(sessioncount) * 100, 2) AS invalidSessionRatio
+        FROM (
+        SELECT '新房挂牌' producttype, SUM(uv) AS indexcount, 0 AS listcount, 0 AS detailcount
+        , 0 AS imcount, 0 AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '首页'
+        union ALL
+        SELECT '二手房挂牌' producttype, SUM(uv) AS indexcount, 0 AS listcount, 0 AS detailcount
+        , 0 AS imcount, 0 AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '首页'
+        union ALL
+        SELECT '家居挂牌'producttype, SUM(uv) AS indexcount, 0 AS listcount, 0 AS detailcount
+        , 0 AS imcount, 0 AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '首页'
+        union ALL
+        SELECT '租房挂牌'producttype, SUM(uv) AS indexcount, 0 AS listcount, 0 AS detailcount
+        , 0 AS imcount, 0 AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '首页'
+        UNION ALL
+        SELECT producttype, 0 AS indexcount, SUM(uv) AS listcount, 0 AS detailcount
+        , 0 AS imcount, 0 AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '列表页'
+        GROUP BY producttype
+        UNION ALL
+        SELECT producttype, 0 AS indexcount, 0 AS listcount, SUM(uv) AS detailcount
+        , 0 AS imcount, 0 AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '详情页'
+        GROUP BY producttype
+        UNION ALL
+        SELECT producttype, 0 AS indexcount, 0 AS listcount, 0 AS detailcount
+        , SUM(uv) AS imcount, 0 AS sessioncount, 0 AS validsessioncount
+        , 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = 'im点击人数'
+        GROUP BY producttype
+        UNION ALL
+        SELECT producttype, 0 AS indexcount, 0 AS listcount, 0 AS detailcount, 0 AS imcount
+        , SUM(uv) AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '会话总数'
+        GROUP BY producttype
+        UNION ALL
+        SELECT producttype, 0 AS indexcount, 0 AS listcount, 0 AS detailcount, 0 AS imcount
+        , 0 AS sessioncount, SUM(uv) AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '有反馈会话数'
+        GROUP BY producttype
+        UNION ALL
+        SELECT producttype, 0 AS indexcount, 0 AS listcount, 0 AS detailcount, 0 AS imcount
+        , 0 AS sessioncount, 0 AS validsessioncount, SUM(uv) AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '无反馈会话数'
+        GROUP BY producttype
+        ) a
+        GROUP BY producttype
+    </select>
+
+    <select id="getCityCount1" resultType="com.fang.bigdata.metadata.entity.CityImEntity">
+        select city,sum(indexcount) AS indexPageUv,
+        sum(listcount) AS listPageUv,
+        sum(detailcount) AS detailPageUv,
+        sum(imcount) AS imCount,
+        sum(sessioncount) AS sessionCount,
+        sum(validsessioncount) AS validSessionCount,
+        sum(invalidsessioncount) AS invalidSessionCount
+        from
+        (select city,sum(uv) as indexcount,0 as listcount,0 as detailcount,0 as imcount, 0 as sessioncount,0 as
+        validsessioncount,0 as invalidsessioncount
+        from bigdata_im_statics_pageuv_chat
+        where city in
+        <foreach collection="citys" open="(" close=")" separator="," item="city">
+            #{city}
+        </foreach>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='首页'
+        group by city
+        union all
+        select city,0 as indexcount,sum(uv) as listcount,0 as detailcount,0 as imcount, 0 as sessioncount,0 as
+        validsessioncount,0 as invalidsessioncount
+        from bigdata_im_statics_pageuv_chat
+        where city in
+        <foreach collection="citys" open="(" close=")" separator="," item="city">
+            #{city}
+        </foreach>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='列表页'
+        <if test="business !='' and business != null">
+            and producttype=#{business}
+        </if>
+        group by city
+        union all
+        select city,0 as indexcount,0 as listcount,sum(uv) as detailcount,0 as imcount, 0 as sessioncount,0 as
+        validsessioncount,0 as invalidsessioncount
+        from bigdata_im_statics_pageuv_chat
+        where city in
+        <foreach collection="citys" open="(" close=")" separator="," item="city">
+            #{city}
+        </foreach>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='详情页'
+        <if test="business !='' and business != null">
+            and producttype=#{business}
+        </if>
+        group by city
+        union all
+        select city,0 as indexcount,0 as listcount,0 as detailcount,sum(uv) as imcount, 0 as sessioncount,0 as
+        validsessioncount,0 as invalidsessioncount
+        from bigdata_im_statics_pageuv_chat
+        where city in
+        <foreach collection="citys" open="(" close=")" separator="," item="city">
+            #{city}
+        </foreach>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='im点击人数'
+        <if test="business !='' and business != null">
+            and producttype=#{business}
+        </if>
+        group by city
+        union all
+        select city,0 as indexcount,0 as listcount,0 as detailcount,0 as imcount, sum(uv) as sessioncount,0 as
+        validsessioncount,0 as invalidsessioncount
+        from bigdata_im_statics_pageuv_chat
+        where city in
+        <foreach collection="citys" open="(" close=")" separator="," item="city">
+            #{city}
+        </foreach>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='会话总数'
+        <if test="business !='' and business != null">
+            and producttype=#{business}
+        </if>
+        group by city
+        union all
+        select city,0 as indexcount,0 as listcount,0 as detailcount,0 as imcount,0 as sessioncount,sum(uv) as
+        validsessioncount,0 as invalidsessioncount
+        from bigdata_im_statics_pageuv_chat
+        where city in
+        <foreach collection="citys" open="(" close=")" separator="," item="city">
+            #{city}
+        </foreach>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='有反馈会话数'
+        <if test="business !='' and business != null">
+            and producttype=#{business}
+        </if>
+        group by city
+        union all
+        select city,0 as indexcount,0 as listcount,0 as detailcount,0 as imcount,0 as sessioncount,0 as
+        validsessioncount,sum(uv) as invalidsessioncount
+        from bigdata_im_statics_pageuv_chat
+        where city in
+        <foreach collection="citys" open="(" close=")" separator="," item="city">
+            #{city}
+        </foreach>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='无反馈会话数'
+        <if test="business !='' and business != null">
+            and producttype=#{business}
+        </if>
+        group by city
+        )a
+        group by city
+    </select>
+
+    <select id="getOneCityCount2" resultType="com.fang.bigdata.metadata.entity.BusinessImEntity">
+        select producttype AS business,sum(indexcount) AS indexPageUv,
+        sum(listcount) AS listPageUv,
+        sum(detailcount) AS detailPageUv,
+        sum(imcount) AS imCount,
+        sum(sessioncount) AS sessionCount,
+        sum(validsessioncount) AS validSessionCount,
+        sum(invalidsessioncount) AS invalidSessionCount
+        FROM (
+        SELECT '新房挂牌' AS producttype, SUM(uv) AS indexcount, 0 AS listcount, 0 AS detailcount
+        , 0 AS imcount, 0 AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        <where>
+            <choose>
+                <when test="city !='' and city != null">
+                    city =#{city}
+                </when>
+                <otherwise>
+                    and 1=1
+                </otherwise>
+            </choose>
+        </where>
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '首页'
+        union ALL
+        SELECT '二手房挂牌' AS producttype, SUM(uv) AS indexcount, 0 AS listcount, 0 AS detailcount
+        , 0 AS imcount, 0 AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        <where>
+            <choose>
+                <when test="city !='' and city != null">
+                    city =#{city}
+                </when>
+                <otherwise>
+                    and 1=1
+                </otherwise>
+            </choose>
+        </where>
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '首页'
+        union ALL
+        SELECT '家居挂牌' AS producttype, SUM(uv) AS indexcount, 0 AS listcount, 0 AS detailcount
+        , 0 AS imcount, 0 AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        <where>
+            <choose>
+                <when test="city !='' and city != null">
+                    city =#{city}
+                </when>
+                <otherwise>
+                    and 1=1
+                </otherwise>
+            </choose>
+        </where>
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '首页'
+        union ALL
+        SELECT '租房挂牌' AS producttype, SUM(uv) AS indexcount, 0 AS listcount, 0 AS detailcount
+        , 0 AS imcount, 0 AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        <where>
+            <choose>
+                <when test="city !='' and city != null">
+                    city =#{city}
+                </when>
+                <otherwise>
+                    and 1=1
+                </otherwise>
+            </choose>
+        </where>
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '首页'
+        UNION ALL
+        SELECT producttype, 0 AS indexcount, SUM(uv) AS listcount, 0 AS detailcount
+        , 0 AS imcount, 0 AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        <where>
+            <choose>
+                <when test="city !='' and city != null">
+                    city =#{city}
+                </when>
+                <otherwise>
+                    and 1=1
+                </otherwise>
+            </choose>
+        </where>
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '列表页'
+        GROUP BY producttype
+        UNION ALL
+        SELECT producttype, 0 AS indexcount, 0 AS listcount, SUM(uv) AS detailcount
+        , 0 AS imcount, 0 AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        <where>
+            <choose>
+                <when test="city !='' and city != null">
+                    city =#{city}
+                </when>
+                <otherwise>
+                    and 1=1
+                </otherwise>
+            </choose>
+        </where>
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '详情页'
+        GROUP BY producttype
+        UNION ALL
+        SELECT producttype, 0 AS indexcount, 0 AS listcount, 0 AS detailcount
+        , SUM(uv) AS imcount, 0 AS sessioncount, 0 AS validsessioncount
+        , 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        <where>
+            <choose>
+                <when test="city !='' and city != null">
+                    city =#{city}
+                </when>
+                <otherwise>
+                    and 1=1
+                </otherwise>
+            </choose>
+        </where>
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = 'im点击人数'
+        GROUP BY producttype
+        UNION ALL
+        SELECT producttype, 0 AS indexcount, 0 AS listcount, 0 AS detailcount, 0 AS imcount
+        , SUM(uv) AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        <where>
+            <choose>
+                <when test="city !='' and city != null">
+                    city =#{city}
+                </when>
+                <otherwise>
+                    and 1=1
+                </otherwise>
+            </choose>
+        </where>
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '会话总数'
+        GROUP BY producttype
+        UNION ALL
+        SELECT producttype, 0 AS indexcount, 0 AS listcount, 0 AS detailcount, 0 AS imcount
+        , 0 AS sessioncount, SUM(uv) AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        <where>
+            <choose>
+                <when test="city !='' and city != null">
+                    city =#{city}
+                </when>
+                <otherwise>
+                    and 1=1
+                </otherwise>
+            </choose>
+        </where>
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '有反馈会话数'
+        GROUP BY producttype
+        UNION ALL
+        SELECT producttype, 0 AS indexcount, 0 AS listcount, 0 AS detailcount, 0 AS imcount
+        , 0 AS sessioncount, 0 AS validsessioncount, SUM(uv) AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        <where>
+            <choose>
+                <when test="city !='' and city != null">
+                    city =#{city}
+                </when>
+                <otherwise>
+                    and 1=1
+                </otherwise>
+            </choose>
+        </where>
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '无反馈会话数'
+        GROUP BY producttype
+        ) a
+        GROUP BY producttype
+    </select>
+
+    <select id="getImCountByActionDay" resultType="com.fang.bigdata.metadata.entity.ActionDayImEntity">
+        select actionday,sum(indexcount) AS indexPageUv,
+        sum(listcount) AS listPageUv,
+        sum(detailcount) AS detailPageUv,
+        sum(imcount) AS imCount,
+        sum(sessioncount) AS sessionCount,
+        sum(validsessioncount) AS validSessionCount,
+        sum(invalidsessioncount) AS invalidSessionCount
+        FROM (
+        SELECT actionday, SUM(uv) AS indexcount, 0 AS listcount, 0 AS detailcount
+        , 0 AS imcount, 0 AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '首页'
+		GROUP by actionday
+        UNION ALL
+        SELECT actionday, 0 AS indexcount, SUM(uv) AS listcount, 0 AS detailcount
+        , 0 AS imcount, 0 AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '列表页'
+		AND producttype=#{business}
+        GROUP BY actionday
+        UNION ALL
+        SELECT actionday, 0 AS indexcount, 0 AS listcount, SUM(uv) AS detailcount
+        , 0 AS imcount, 0 AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '详情页'
+		AND producttype=#{business}
+        GROUP BY actionday
+        UNION ALL
+        SELECT actionday, 0 AS indexcount, 0 AS listcount, 0 AS detailcount
+        , SUM(uv) AS imcount, 0 AS sessioncount, 0 AS validsessioncount
+        , 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = 'im点击人数'
+		AND producttype=#{business}
+        GROUP BY actionday
+        UNION ALL
+        SELECT actionday, 0 AS indexcount, 0 AS listcount, 0 AS detailcount, 0 AS imcount
+        , SUM(uv) AS sessioncount, 0 AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '会话总数'
+		AND producttype=#{business}
+        GROUP BY actionday
+        UNION ALL
+        SELECT actionday, 0 AS indexcount, 0 AS listcount, 0 AS detailcount, 0 AS imcount
+        , 0 AS sessioncount, SUM(uv) AS validsessioncount, 0 AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '有反馈会话数'
+		AND producttype=#{business}
+        GROUP BY actionday
+        UNION ALL
+        SELECT actionday, 0 AS indexcount, 0 AS listcount, 0 AS detailcount, 0 AS imcount
+        , 0 AS sessioncount, 0 AS validsessioncount, SUM(uv) AS invalidsessioncount
+        FROM bigdata_im_statics_pageuv_chat
+        WHERE city =#{city}
+        AND actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '无反馈会话数'
+		AND producttype=#{business}
+        GROUP BY actionday
+        ) a
+        GROUP BY actionday
+    </select>
+
+    <select id="getPercentRankByCity" resultType="com.fang.bigdata.metadata.entity.PercentRankBaseEntity">
+        select city AS name,
+        round(sum(imcount)/sum(detailcount),2)*100 AS percent
+        from
+        (
+        select city,sum(uv) as detailcount,0 as imcount
+        from bigdata_im_statics_pageuv_chat
+        <where>
+            <choose>
+                <when test="citys != null and citys.size()>0">
+                    city in
+                    <foreach collection="citys" open="(" close=")" separator="," item="city">
+                        #{city}
+                    </foreach>
+                </when>
+                <otherwise>
+                    and 1=1
+                </otherwise>
+            </choose>
+        </where>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='详情页'
+        group by city
+        union all
+        select city,0 as detailcount,sum(uv) as imcount
+        from bigdata_im_statics_pageuv_chat
+        <where>
+            <choose>
+                <when test="citys != null and citys.size()>0">
+                    city in
+                    <foreach collection="citys" open="(" close=")" separator="," item="city">
+                        #{city}
+                    </foreach>
+                </when>
+                <otherwise>
+                    and 1=1
+                </otherwise>
+            </choose>
+        </where>
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='im点击人数'
+        group by city
+        )a
+        group by city
+        ORDER BY round(sum(imcount)/sum(detailcount),2)*100 DESC
+    </select>
+
+    <select id="getPercentRankByBusiness" resultType="com.fang.bigdata.metadata.entity.PercentRankBaseEntity">
+        select producttype AS name,
+        round(sum(imcount)/sum(detailcount),2)*100 AS percent
+        from
+        (
+        select producttype,sum(uv) as detailcount,0 as imcount
+        from bigdata_im_statics_pageuv_chat
+        where (producttype is not null and producttype <![CDATA[<> ]]> '')
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='详情页'
+        group by producttype
+        union all
+        select producttype,0 as detailcount,sum(uv) as imcount
+        from bigdata_im_statics_pageuv_chat
+        where (producttype is not null and producttype <![CDATA[<> ]]> '')
+        and actionday <![CDATA[>= ]]> #{startDay}
+        and actionday <![CDATA[<= ]]> #{endDay}
+        and pagetype='im点击人数'
+        group by producttype
+        )a
+        group by producttype
+        ORDER BY round(sum(imcount)/sum(detailcount),2)*100  DESC
+    </select>
+
+    <select id="getClickCountRankByBusiness" resultType="com.fang.bigdata.metadata.entity.PageClickRankEntity">
+        select pagescn as name,p.pgname as pageName,chatuv
+        from hw_chat_explore_uv h
+        left join pgid_pgname p
+        on h.pages=p.pgid
+        <where>
+            <choose>
+                <when test="business !='' and business != null">
+                    pagescn =#{business}
+                </when>
+                <otherwise>
+                    and 1=1
+                </otherwise>
+            </choose>
+        </where>
+        and actionday= #{actionDay}
+        and platform= #{platform}
+        order by chatuv desc limit #{limit}
+    </select>
+
+    <select id="getClickPercentRankByBusiness" resultType="com.fang.bigdata.metadata.entity.PageClickRankEntity">
+        select pagescn as name,p.pgname as pageName,chatuv,exploreuv,case when exploreuv <![CDATA[<> ]]> 0 then round(chatuv*1.0/exploreuv,4)*100 else 0 end AS percent
+        from hw_chat_explore_uv h
+        left join pgid_pgname p
+        on h.pages=p.pgid
+        <where>
+            <choose>
+                <when test="business !='' and business != null">
+                    pagescn =#{business}
+                </when>
+                <otherwise>
+                    and 1=1
+                </otherwise>
+            </choose>
+        </where>
+        and actionday= #{actionDay}
+        and platform= #{platform}
+        order by chatuv desc limit #{limit}
+    </select>
+
+    <select id="getOneImEntity" resultType="com.fang.bigdata.metadata.entity.imstatics.ImEntity">
+        SELECT
+        sum( indexcount ) AS indexPageUv,
+        sum( listcount ) AS listPageUv,
+        sum( detailcount ) AS detailPageUv,
+        sum( imcount ) AS imCount,
+        sum( sessioncount ) AS sessionCount,
+        sum( validsessioncount ) AS validSessionCount,
+        sum( invalidsessioncount ) AS invalidSessionCount
+        FROM
+        (
+        SELECT
+        sum( uv ) AS indexcount,
+        0 AS listcount,
+        0 AS detailcount,
+        0 AS imcount,
+        0 AS sessioncount,
+        0 AS validsessioncount,
+        0 AS invalidsessioncount
+        FROM
+        bigdata_im_statics_pageuv_chat
+        WHERE
+        actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '首页'
+
+        UNION ALL
+        SELECT
+        0 AS indexcount,
+        sum( uv ) AS listcount,
+        0 AS detailcount,
+        0 AS imcount,
+        0 AS sessioncount,
+        0 AS validsessioncount,
+        0 AS invalidsessioncount
+        FROM
+        bigdata_im_statics_pageuv_chat
+        WHERE
+        actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '列表页'
+        
+        UNION ALL
+        SELECT
+        0 AS indexcount,
+        0 AS listcount,
+        sum( uv ) AS detailcount,
+        0 AS imcount,
+        0 AS sessioncount,
+        0 AS validsessioncount,
+        0 AS invalidsessioncount
+        FROM
+        bigdata_im_statics_pageuv_chat
+        WHERE
+        actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '详情页'
+        UNION ALL
+        SELECT
+        0 AS indexcount,
+        0 AS listcount,
+        0 AS detailcount,
+        sum( uv ) AS imcount,
+        0 AS sessioncount,
+        0 AS validsessioncount,
+        0 AS invalidsessioncount
+        FROM
+        bigdata_im_statics_pageuv_chat
+        WHERE
+        actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = 'im点击人数'
+        UNION ALL
+        SELECT
+
+        0 AS indexcount,
+        0 AS listcount,
+        0 AS detailcount,
+        0 AS imcount,
+        sum( uv ) AS sessioncount,
+        0 AS validsessioncount,
+        0 AS invalidsessioncount
+        FROM
+        bigdata_im_statics_pageuv_chat
+        WHERE
+        actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '会话总数'
+        UNION ALL
+        SELECT
+
+        0 AS indexcount,
+        0 AS listcount,
+        0 AS detailcount,
+        0 AS imcount,
+        0 AS sessioncount,
+        sum( uv ) AS validsessioncount,
+        0 AS invalidsessioncount
+        FROM
+        bigdata_im_statics_pageuv_chat
+        WHERE
+        actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '有反馈会话数'
+        UNION ALL
+        SELECT
+
+        0 AS indexcount,
+        0 AS listcount,
+        0 AS detailcount,
+        0 AS imcount,
+        0 AS sessioncount,
+        0 AS validsessioncount,
+        sum( uv ) AS invalidsessioncount
+        FROM
+        bigdata_im_statics_pageuv_chat
+        WHERE
+        actionday <![CDATA[>= ]]> #{startDay}
+        AND actionday <![CDATA[<= ]]> #{endDay}
+        AND pagetype = '无反馈会话数'
+        ) a
+    </select>
+
+    <select id="getImStaticsPageuvChatByProducttype" resultType="com.fang.bigdata.metadata.entity.imstatics.ImStaticsPageuvChat">
+        select producttype,sum(uv) as uv,pagetype
+        from bigdata_im_statics_pageuv_chat
+        where pagetype in ('会话总数','有反馈会话数','无反馈会话数')
+        and producttype = #{producttype}
+        and actionday = #{actionDay}
+        GROUP BY producttype,pagetype
+    </select>
+</mapper>
