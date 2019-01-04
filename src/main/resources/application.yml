@@ -22,7 +22,7 @@ logging:
 
 ---
 
-#开发配置
+#开发环境
 spring:
   profiles:
     active: dev
@@ -126,19 +126,17 @@ datasource:
     testOnReturn: false
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
-#spring-boot 结合jsp配置
-  #mvc:
-   # view:
-      # 页面默认前缀目录
-    #  prefix: /WEB-INF/jsp/
-      # 响应页面默认后缀
-     # suffix: .jsp
-
+---
+#uat环境
+spring:
+  profiles: uat
 ---
 
-#测试配置
+#pro环境配置
 spring:
-  profiles: test
+  profiles: pro
+  application:
+    name: imwebreport
 #  datasource:
 #      url: jdbc:mysql://10.16.64.240:3801/bi_data?useUnicode=true&characterEncoding=UTF-8
 #      username: bi_data_admin
@@ -241,7 +239,13 @@ datasource:
     testOnReturn: false
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
-#server:
-  #ip: 10.16.134.134
-  #port: 8088
-  #不好使 context-path: /sdk
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://bigdata_eureka:xK82u02xIilG@10.16.134.179:9999/eureka/,http://bigdata_eureka:xK82u02xIilG@10.16.134.180:9999/eureka/
+
+server:
+  port: 8801
+    tomcat:
+      uri-encoding: UTF-8

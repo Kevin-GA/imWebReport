@@ -5,9 +5,12 @@ import com.fang.bigdata.metadata.entity.ImCity;
 import com.fang.bigdata.metadata.entity.imstatics.ImAnalyse;
 import com.fang.bigdata.metadata.service.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.util.SystemOutLogger;
+import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sun.security.tools.keytool.Main;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -318,7 +321,21 @@ public class ImController {
         //处理回话内容
         ImAnalyse imAnalyse = imAnalyseService.selectByMessageidActionday(imid, logday);
         String contents = imAnalyse.getContents();
-        String[] MessageInfos = contents.split("&&&");
+        String[] MessageInfos = contents.split("\\&\\&\\&");
+        List<String[]> msgStrs = new ArrayList<>();
+        for (String msgInfo: MessageInfos)
+        {
+            String[] s = new String[4];
+            s[0]=msgInfo.startsWith("l")?"right":"left";
+            //发送消息账号
+            s[1]=msgInfo.split("\\^\\^")[0];
+            //消息
+            s[2]=msgInfo.split("\\^\\^")[1];
+            //时间
+            s[3]=msgInfo.split("\\^\\^")[2];
+            msgStrs.add(s);
+        }
+        model.addAttribute("msgStrs",msgStrs);
 
         DwdEffectImMessage dwdEffectImMessage = dwdEffectImMessageService.queryByImChatMessageMessageid(imid, logday);
         //转义城市
@@ -346,5 +363,27 @@ public class ImController {
         model.addAttribute("formPre",formPre);
         model.addAttribute("clienttype",clienttype);
         return "dataItem/im-analyse-more";
+    }
+
+
+    public static void main(String[] args) {
+        String test="bhyax1994^^有什么能帮到您的更好^^2018-12-01 00:00:01.423&&&l:fang4801776461^^比较喜欢御龙湾的^^2018-12-01 00:00:18.203&&&l:fang4801776461^^比较喜欢御龙湾的^^2018-12-01 00:00:18.203";
+        String[] MessageInfos = test.split("\\&\\&\\&");
+        System.out.println(MessageInfos.length);
+        System.out.println(MessageInfos[0]);
+        List<String[]> msgStrs = new ArrayList<>();
+        for (String msgInfo: MessageInfos)
+        {
+            String[] s = new String[4];
+            s[0]=msgInfo.startsWith("l")?"right":"left";
+            String[] split = msgInfo.split("\\^\\^");
+            //发送消息账号
+            s[1]=msgInfo.split("^^")[0];
+            //消息
+            s[2]=msgInfo.split("^^")[1];
+            //时间
+            s[3]=msgInfo.split("^^")[2];
+            msgStrs.add(s);
+        }
     }
 }

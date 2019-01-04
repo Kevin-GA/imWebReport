@@ -12,7 +12,6 @@
 </DIV><!-- 头部 E --><!-- 内容 [[ -->
 <!-- 主区域 [[ -->
 <!--<DIV id=art-content class=content >--><!-- 内容 [[ -->
-
 <STYLE>.add SPAN {
     CURSOR: pointer;
     BORDER-TOP: #e7e7e7 1px solid;
@@ -66,18 +65,24 @@
                              <td width="20%"></td>
                              <td width="30%"></td>
                          </TR>
-                         <tr>
-                             <td width="20%"></td>
-                             <td width="30%"></td>
-                             <td width="20%"></td>
-                             <td width="30%"></td>
+                         <TR th:if="${msgStrs[0][0]}=='left'">
+                             <td width="50%" colspan="2" style="text-align: left" th:text="${imdetail.formFromuser}"></td>
+                             <td width="50%" colspan="2" style="text-align: right" th:text="${imdetail.sendtoSendtouser}"></td>
+                         </TR>
+                         <TR th:if="${msgStrs[0][0]}=='right'">
+                             <td width="50%" colspan="2" style="text-align: left" th:text="${imdetail.sendtoSendtouser}"></td>
+                             <td width="50%" colspan="2" style="text-align: right" th:text="${imdetail.formFromuser}"></td>
+                         </TR>
+                         <tr th:each="msgStrs,msgStrsStat:${msgStrs}">
+                             <!--<td width="100%" colspan="4" style="text-align: left">盗取我的求安慰多不</td>-->
+                             <td width="100%" colspan="4" th:style=" ${'text-align:'+msgStrs[0]}" th:text="${msgStrs[2]}+'('+${msgStrs[3]}+')'">盗取我的求安慰多不</td>
                          </tr>
+
                          <TR >
                              <td width="20%">消息发送时间</td>
                              <td th:text="${imdetail.imChatMessageMessagetime}" width="30%"></td>
                              <td width="20%">城市</td>
                              <td th:text="${city}" width="30%"></td>
-
                          </TR>
 
                          <TR th:if="${imdetail.imChatMessageShopid!=''&amp;&amp;imdetail.imChatMessageShopid!=null}">
