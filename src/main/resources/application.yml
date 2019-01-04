@@ -126,10 +126,11 @@ datasource:
     testOnReturn: false
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
----
-#uat环境
-spring:
-  profiles: uat
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:9999/eureka/
 ---
 
 #pro环境配置
@@ -247,5 +248,5 @@ eureka:
 
 server:
   port: 8801
-    tomcat:
-      uri-encoding: UTF-8
+  tomcat:
+    uri-encoding: UTF-8
