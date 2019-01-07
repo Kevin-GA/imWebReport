@@ -68,7 +68,7 @@ IMG {
 	PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; MARGIN: 0px; PADDING-RIGHT: 0px
 }
 BODY {
-	BACKGROUND: #e7e8eb; MIN-WIDTH: 1200px; COLOR: #222222; FONT: 14px/1.6 "Helvetica Neue","Hiragino Sans GB","Microsoft YaHei","����",Arial,sans-serif
+	BACKGROUND: #e7e8eb; /*MIN-WIDTH: 1200px;*/ COLOR: #222222; FONT: 14px/1.6 "Helvetica Neue","Hiragino Sans GB","Microsoft YaHei","����",Arial,sans-serif
 }
 H1 {
 	FONT-SIZE: 100%; FONT-WEIGHT: 400

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="common2000::commonHeader('im首页')"></head>
 <!--<script type="text/javascript" th:src="@{/js/jquery-1.7.2.min.js}"></script>-->
-<BODY class=technology-integr style="width: 1000px"><!-- 头部 S -->
+<BODY class=technology-integr style="max-width: 1000px"><!-- 头部 S -->
 <SCRIPT>var _speedMark = Date.now()</SCRIPT>
 <SCRIPT>
     $(function () {
@@ -139,7 +139,6 @@
         $.ajax({
 //            url:"/imstatics/getAPPNewHouseUVList?actionday=20181201,20181201",
             url:"../imstatics/getAPPNewHouseUVList?actionday="+$actionday+","+$actionday,
-//            url:"/imstatics/getpercentrankbybusiness2?actionday="+$actionday+","+$actionday,
             type :"get",
             dataType : "JSON",
             data : {},
@@ -899,7 +898,7 @@
             <div class="data-bd" style="margin-top: 450px;margin-left: 56px;">
                 <div class="tit_con">APP新房楼盘聊天数排行</div>
                 <div name="table" style="height:400px;width: 34%;float: left">
-                    <TABLE class="table table-hover" id="table5">
+                    <TABLE class="table table-hover" id="table4">
                         <THEAD>
                         <TR>
                             <TH class=var>楼盘名</TH>
