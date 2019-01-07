@@ -26,6 +26,10 @@ logging:
 spring:
   profiles:
     active: dev
+  application:
+    name: imwebreport
+  mvc:
+    static-path-pattern: /**
 #  datasource:
 #      url: jdbc:mysql://10.16.64.45:3307/bi_data_test?useUnicode=true&characterEncoding=UTF-8
 #      username: bi_test_admin
@@ -133,6 +137,123 @@ eureka:
       defaultZone: http://127.0.0.1:9999/eureka/
 server:
   port: 8080
+  servlet:
+    context-path: /meta
+  tomcat:
+    uri-encoding: UTF-8
+---
+#uat环境
+spring:
+  profiles: uat
+  application:
+    name: imwebreport
+  mvc:
+    static-path-pattern: /**
+datasource:
+  mysql:
+    driverclass: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.16.64.240:3801/bi_data?useUnicode=true&characterEncoding=UTF-8
+    username: bi_data_admin
+    password: QTmQRW9Q
+    #    username: bigdata_admin
+    #    password: 62Bs6dux
+    filters: stat
+    maxActive: 200
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  kylin:
+    driverclass: org.apache.kylin.jdbc.Driver
+    url: jdbc:kylin://kylin.light.fang.com:80/searchkeywords
+    username: ADMIN
+    password: KYLIN
+    filters: stat
+    maxActive: 200
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  kylin_newsfb:
+    driverclass: org.apache.kylin.jdbc.Driver
+    url: jdbc:kylin://kylin.light.fang.com:80/newsfbagentstat
+    username: ADMIN
+    password: KYLIN
+    filters: stat
+    maxActive: 200
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: false
+    maxOpenPreparedStatements: 20
+  impala_dwd:
+    driverclass: com.cloudera.impala.jdbc41.Driver
+    url: jdbc:impala://10.16.0.161:21050/dwd
+    username: admin
+    password: admin
+    filters: stat
+    maxActive: 200
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: false
+    maxOpenPreparedStatements: 20
+  ub:
+    driverclass: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://10.16.69.12:1433;databaseName=ub;
+    username: datacenter_ub_admin
+    password: htMsk5b4
+    #    username: bigdata_admin
+    #    password: 62Bs6dux
+    filters: stat
+    maxActive: 200
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://bigdata_eureka:111111@10.16.206.217:9999/eureka/,http://bigdata_eureka:111111@10.16.206.216:9999/eureka/
+
+server:
+  port: 8100
+  servlet:
+    context-path: /meta
   tomcat:
     uri-encoding: UTF-8
 ---
@@ -142,6 +263,8 @@ spring:
   profiles: pro
   application:
     name: imwebreport
+  mvc:
+    static-path-pattern: /**
 #  datasource:
 #      url: jdbc:mysql://10.16.64.240:3801/bi_data?useUnicode=true&characterEncoding=UTF-8
 #      username: bi_data_admin
@@ -251,6 +374,9 @@ eureka:
       defaultZone: http://bigdata_eureka:xK82u02xIilG@10.16.134.179:9999/eureka/,http://bigdata_eureka:xK82u02xIilG@10.16.134.180:9999/eureka/
 
 server:
-  port: 8801
+  port: 8100
+  servlet:
+    context-path: /meta
   tomcat:
     uri-encoding: UTF-8
+

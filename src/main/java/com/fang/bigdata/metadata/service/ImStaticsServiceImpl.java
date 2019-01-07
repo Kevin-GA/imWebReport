@@ -17,7 +17,7 @@ import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.*;
 
-@Service
+@Service("ImStaticsService")
 public class ImStaticsServiceImpl implements ImStaticsService {
 
     @Autowired
@@ -772,6 +772,7 @@ public class ImStaticsServiceImpl implements ImStaticsService {
         return imStaticsMapper.getOneImEntity(actiondays[0], actiondays[1]);
     }
 
+
     @Autowired
     ImStaticsProjnameMapper imStaticsProjnameMapper;
 
@@ -813,5 +814,92 @@ public class ImStaticsServiceImpl implements ImStaticsService {
     @Override
     public List<ImStaticsPageuvChat> getImStaticsPageuvChatByProducttype(String actionDay, String producttype) {
         return imStaticsMapper.getImStaticsPageuvChatByProducttype(actionDay, producttype);
+    }
+
+
+    @Override
+    public ImStaticsRetBeanCount getLoupanAvgUv(String actionday, String city) {
+        String[] actiondays = actionday.split(",", -1);
+        List<String> citys = Arrays.asList(city.split(",", -1));
+        ImStaticsRetBeanCount imStaticsRetBeanCount = new ImStaticsRetBeanCount();
+
+        List<String> lineList = new ArrayList<>();
+        lineList.add("聊天量");
+        lineList.add("全国平均聊天量");
+        imStaticsRetBeanCount.setLine(lineList);
+
+        List<String> xList = Arrays.asList(city.split(",", -1));
+        imStaticsRetBeanCount.setX(xList);
+
+        Double avgCount = imStaticsProjnameMapper.getAvgShopidUv(actiondays[0], actiondays[1]);
+        List<ImShopUv> shopidUvCity = imStaticsProjnameMapper.getAvgShopidUvByCity(actiondays[0], actiondays[1], citys);
+        List<SeriesBeanCount> seriesList = new ArrayList<>();
+        SeriesBeanCount seriesBeanCount1 = new SeriesBeanCount();
+        seriesBeanCount1.setName("聊天量");
+        List<String> dataList1 = new ArrayList<>();
+        for (ImShopUv imShopUv:
+        shopidUvCity)
+        {
+            dataList1.add(imShopUv.getUvcount());
+        }
+        seriesBeanCount1.setData(dataList1);
+
+        SeriesBeanCount seriesBeanCount2 = new SeriesBeanCount();
+        seriesBeanCount2.setName("全国平均聊天量");
+        seriesBeanCount2.setType("line");
+        List<String> dataList2 = new ArrayList<>();
+        for (ImShopUv imShopUv:
+        shopidUvCity)
+        {
+            dataList2.add(avgCount + "");
+        }
+        seriesBeanCount2.setData(dataList2);
+
+        seriesList.add(seriesBeanCount1);
+        seriesList.add(seriesBeanCount2);
+        imStaticsRetBeanCount.setSeries(seriesList);
+
+        return imStaticsRetBeanCount;
+    }
+
+    @Override
+    public ImStaticsRetBeanCount getLoupanAvgUvBycity(String actionday, String city) {
+        String[] actiondays = actionday.split(",", -1);
+        ImStaticsRetBeanCount imStaticsRetBeanCount = new ImStaticsRetBeanCount();
+        List<String> lineList = new ArrayList<>();
+        lineList.add("聊天量");
+        lineList.add("平均聊天量");
+        imStaticsRetBeanCount.setLine(lineList);
+
+        Double avgLoupanUv = imStaticsProjnameMapper.getAvgLoupanUv(actiondays[0], actiondays[1],city);
+        List<ImShopUv> loupanUvByCity = imStaticsProjnameMapper.getAvgLoupanUvByCity(actiondays[0], actiondays[1], city);
+
+        List<String> xList = new ArrayList<>();
+        List<SeriesBeanCount> seriesList = new ArrayList<>();
+        SeriesBeanCount seriesBeanCount1 = new SeriesBeanCount();
+        SeriesBeanCount seriesBeanCount2 = new SeriesBeanCount();
+        seriesBeanCount1.setName("聊天量");
+        seriesBeanCount2.setName("平均聊天量");
+        seriesBeanCount2.setType("line");
+        List<String> dataList1 = new ArrayList<>();
+        List<String> dataList2 = new ArrayList<>();
+
+        for (ImShopUv imShopUv:
+        loupanUvByCity)
+        {
+            xList.add(imShopUv.getShopid());
+            dataList1.add(imShopUv.getUvcount());
+            dataList2.add(avgLoupanUv+"");
+        }
+        seriesBeanCount1.setData(dataList1);
+        seriesBeanCount2.setData(dataList2);
+
+        seriesList.add(seriesBeanCount1);
+        seriesList.add(seriesBeanCount2);
+
+        imStaticsRetBeanCount.setX(xList);
+        imStaticsRetBeanCount.setSeries(seriesList);
+
+        return imStaticsRetBeanCount;
     }
 }

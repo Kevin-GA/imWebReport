@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common::commonHeader('城市业务转化量随时间变化')">
+<head th:replace="common::commonHeader('单个城市平均uv')">
     <link th:href="@{/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" media="screen">
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen">
 
@@ -21,12 +21,16 @@
 
             }
         })
-        $("#starttime").val(formate7dayago());
+        $("#starttime").val(formateyesterday());
         $("#endtime").val(formateyesterday());
         showCharts();
-
+//        loadBestTimeInfo();
         $("#search_btn").click(function(){
             showCharts();
+        })
+
+        $("#count_time").click(function(){
+            window.open("../dataItem/im-uvcount-times")
         })
     })
 
@@ -40,6 +44,7 @@
         var yyyyMMdd = curr_year + "-" + curr_month +"-"+ curr_date;
         return yyyyMMdd;
     };
+
     function formateyesterday(){
         var d = new Date();
         d.setTime(d.getTime()-24*60*60*1000);
@@ -51,20 +56,58 @@
         var yyyyMMdd = curr_year + "-" + curr_month +"-"+ curr_date;
         return yyyyMMdd;
     };
-    function formate7dayago(){
+
+    function formatedayago(ago){
         var d = new Date();
-        d.setTime(d.getTime()-7*24*60*60*1000);
+        d.setTime(d.getTime()-24*60*60*1000*ago);
         var curr_date = d.getDate();
         var curr_month = d.getMonth() + 1;
         var curr_year = d.getFullYear();
         String(curr_month).length < 2 ? (curr_month = "0" + curr_month): curr_month;
         String(curr_date).length < 2 ? (curr_date = "0" + curr_date): curr_date;
-        var yyyyMMdd = curr_year + "-" + curr_month +"-"+ curr_date;
+        var yyyyMMdd = curr_year + "" + curr_month +""+ curr_date;
         return yyyyMMdd;
     };
 
+    function loadBestTimeInfo(){
+        $.ajax({
+            url:"../getuvInBestHour",
+            type :"get",
+            dataType : "JSON",
+            data : {
+                actionday:formatedayago(31)+','+formatedayago(1),
+                city:$("#city").val() == null ? "上海" : $("#city").val()
+            },
+            success: function(data){
+                if(data.length>1){
+                    if(data[0]>data[1]){
+                        $("#besthour").html("最佳时段为："+data[1]+" ~ "+data[0]+"点");
+                    }else{
+                        $("#besthour").html("最佳时段为："+data[0]+" ~ "+data[1]+"点");
+                    }
+                }
+
+            }
+        })
+        $.ajax({
+            url:"../getuvInBestWeek",
+            type :"get",
+            dataType : "JSON",
+            data : {
+                actionday:formatedayago(31)+','+formatedayago(1),
+                city:$("#city").val() == null ? "上海" : $("#city").val()
+            },
+            success: function(data){
+                if(data.length>1){
+                    $("#bestweek").html("最佳星期为："+data[0]+"和"+data[1]);
+                }
+
+            }
+        })
+    };
+
     function change_city(){
-//        alert($("#city").val());
+        alert($("#city").val());
 //        $(".form_date").datetimepicker("setDate", _speedMark);
     };
 
@@ -115,22 +158,24 @@
         <div class="form-group col-lg-2">
             <div class="input-group">
                 <span class="input-group-addon">城市</span>
-                <select id="city" class="form-control" >
+                <select id="city" class="form-control">
                     <!--<option value="北京">北京</option>-->
                 </select>
             </div>
         </div>
-        <div class="form-group col-lg-2">
-            <div class="input-group">
-                <span class="input-group-addon">业务分类</span>
-                <select id="imServiceType" class="form-control"  >
-                    <option value="二手房挂牌">二手房</option>
-                    <option value="新房挂牌">新房</option>
-                    <option value="家居挂牌">家居</option>
-                    <option value="租房挂牌">租房</option>
-                </select>
-            </div>
-        </div>
+
+        <!--<div class="form-group col-lg-2">-->
+            <!--<div class="input-group">-->
+                <!--<span class="input-group-addon">业务分类</span>-->
+                <!--<select id="imChatMessageType" class="form-control" multiple onchange="change_city()">-->
+                    <!--<option value="agent">二手房挂牌</option>-->
+                    <!--<option value="commerce">三房挂牌</option>-->
+                    <!--<option value="home">家居挂牌</option>-->
+                    <!--<option value="consultant">广告</option>-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
+
         <div class="form-group col-lg-3">
             <div class="input-group">
                 <span class="input-group-addon">开始时间</span>
@@ -154,6 +199,8 @@
             <input type="hidden" id="dtp_input2" value="" /><br/>
         </div>
         <div class="form-group col-lg-1"> <button class="btn btn-primary" id="search_btn">查询</button> </div>
+
+        <div class="form-group col-lg-1"> <button class="btn btn-primary" id="count_time">单城市单业务统计</button> </div>
     </div>
         <p id="neirong" style="text-align: center; color: #FF0000">&nbsp;</p>
         <p>&nbsp;</p>
@@ -167,26 +214,20 @@
             <div class="marks-msg with-title"><!-- 左边带标题 with-title -->
                 <DIV class=data-bd>
                     <div id="main" style="height:400px"></div>
-                    <script th:inline="javascript">
+                    <script>
                         function showCharts(){
 
-                            /*<![CDATA[*/
-                            // 基于准备好的dom，初始化echarts图表
                             var app = echarts.init(document.getElementById('main'));
                             var $starttime =$("#starttime").val().replace("-","").replace("-","");
                             var $endtime =$("#endtime").val().replace("-","").replace("-","");
-                            var $city =  $("#city").val() == null ? "上海":$("#city").val();
-                            var $business = $("#imServiceType").val();
+                            var $city = $("#city").val() == null ? "上海" : $("#city").val()
+
                             $.ajax({
-                                url:"../imstatics/getonecitydaycount3?actionday="+$starttime+","+$endtime+"&city="+$city+"&business="+$business,
-//                                url:"/imstatics/getcitypercentage1?actionday="+$starttime+","+$endtime+"&city="+$city,
-//                                url:"/imstatics/getonecitypercentage2?actionday="+$starttime+","+$endtime+"&city="+$("#city").val(),
+                                url:"../imstatics/getLoupanAvgUvBycity?actionday="+$starttime+","+$endtime+"&city="+$city,
                                 type :"get",
                                 dataType : "JSON",
                                 data : {},
                                 success: function(data){
-
-
                                     option = {
                                         tooltip: {
                                             trigger: 'axis'
@@ -214,16 +255,16 @@
                                         yAxis: [
                                             {
                                                 type: 'value',
-                                                name: '人数',
+                                                name: '聊天量',
                                                 axisLabel: {
                                                     formatter: '{value}'
                                                 }
                                             },
                                             {
                                                 type: 'value',
-                                                name: '转化率',
+                                                name: '平均聊天量',
                                                 axisLabel: {
-                                                    formatter: '{value} %'
+                                                    formatter: '{value}'
                                                 }
                                             }
                                         ],
@@ -244,16 +285,16 @@
     </div>
 
 </DIV>
-<!--<DIV class=page-right>-->
-    <!--<DIV class=Catalog-box>-->
-        <!--<DIV id=Catalog-box></DIV>-->
-        <!--<DIV class=complaints>-->
-            <!--<UL>-->
-                <!--<LI><A href="#">返回顶部</A></LI>-->
-            <!--</UL>-->
-        <!--</DIV>-->
-    <!--</DIV>-->
-<!--</DIV>-->
+<DIV class=page-right>
+    <DIV class=Catalog-box>
+        <DIV id=Catalog-box></DIV>
+        <DIV class=complaints>
+            <UL>
+                <LI><A href="#">返回顶部</A></LI>
+            </UL>
+        </DIV>
+    </DIV>
+</DIV>
 <DIV th:include="common::footer" class=footer>
 </DIV>
 <!--<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>-->

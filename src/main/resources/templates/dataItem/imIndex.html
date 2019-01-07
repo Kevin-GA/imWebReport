@@ -27,7 +27,7 @@
 
 
         $("#to-im-list").click(function(){
-            window.open("/dataItem/im-list");
+            window.open("../dataItem/im-list");
         })
         $('.wenhao').hover(function(){
             $(this).find('.wenhao-alert').css('visibility','visible');
@@ -51,7 +51,7 @@
     function addPageUvCount(){
         var $actionday=formateyesterday();
         $.ajax({
-            url:"/imstatics/getYesterdayUV?actionday="+$actionday+","+$actionday,
+            url:"../imstatics/getYesterdayUV?actionday="+$actionday+","+$actionday,
             type :"get",
             dataType : "JSON",
             data : {},
@@ -72,7 +72,7 @@
         $.ajax({
 //            url:"/imstatics/citypercentageorder1?actionday=20181201,20181205",
 //            url:"/imstatics/citypercentageorder1?actionday=20181201,20181205&city=北京,上海,广州,深圳,天津,武汉,成都,南京,青岛,杭州,重庆",
-            url:"/imstatics/citypercentageorder1?actionday="+$actionday+","+$actionday+"&city=北京,上海,广州,深圳,天津,武汉,成都,南京,青岛,杭州,重庆",
+            url:"../imstatics/citypercentageorder1?actionday="+$actionday+","+$actionday+"&city=北京,上海,广州,深圳,天津,武汉,成都,南京,青岛,杭州,重庆",
             type :"get",
             dataType : "JSON",
             data : {},
@@ -93,7 +93,7 @@
         var $actionday=formateyesterday();
         $.ajax({
 //            url:"/imstatics/getpercentrankbybusiness2?actionday=20181201,20181205",
-            url:"/imstatics/getpercentrankbybusiness2?actionday="+$actionday+","+$actionday,
+            url:"../imstatics/getpercentrankbybusiness2?actionday="+$actionday+","+$actionday,
             type :"get",
             dataType : "JSON",
             data : {},
@@ -114,7 +114,7 @@
     function addTable3(){
         var $actionday=formateyesterday();
         $.ajax({
-            url:"/imstatics/getclickcountrankbybusiness3?actionday="+$actionday+"&platform=APP&business=新房挂牌&limit=10",
+            url:"../imstatics/getclickcountrankbybusiness3?actionday="+$actionday+"&platform=APP&business=新房挂牌&limit=10",
 //            url:"/imstatics/getpercentrankbybusiness2?actionday="+$actionday+","+$actionday,
             type :"get",
             dataType : "JSON",
@@ -138,7 +138,7 @@
         var $actionday=formateyesterday();
         $.ajax({
 //            url:"/imstatics/getAPPNewHouseUVList?actionday=20181201,20181201",
-            url:"/imstatics/getAPPNewHouseUVList?actionday="+$actionday+","+$actionday,
+            url:"../imstatics/getAPPNewHouseUVList?actionday="+$actionday+","+$actionday,
 //            url:"/imstatics/getpercentrankbybusiness2?actionday="+$actionday+","+$actionday,
             type :"get",
             dataType : "JSON",
@@ -161,11 +161,10 @@
     function tableClick() {
         $(".table td").click(function(){
             var sid = $(this).parent().find("td").eq(0).html();
-            window.open("/xueyuan-more/"+sid);
+            window.open("../xueyuan-more/"+sid);
         });
     };
-//     设置domain
-        document.domain = 'fang.com';
+
 </SCRIPT>
 
 
@@ -317,7 +316,7 @@
 
                                 $.ajax({
 
-                                    url:"/imstatics/getImStaticsPageuvChatByProducttype?actionday=20181201&producttype=新房挂牌",
+                                    url:"../imstatics/getImStaticsPageuvChatByProducttype?actionday=20181201&producttype=新房挂牌",
 //                                    url:"/imstatics/getImStaticsPageuvChatByProducttype?actionday="+$actionday+"&producttype=新房挂牌",
                                     type: "get",
                                     dataType: "JSON",
@@ -416,7 +415,7 @@
 
                                 $.ajax({
 
-                                    url:"/imstatics/getImStaticsPageuvChatByProducttype?actionday=20181201&producttype=二手房挂牌",
+                                    url:"../imstatics/getImStaticsPageuvChatByProducttype?actionday=20181201&producttype=二手房挂牌",
 //                                    url:"/imstatics/getImStaticsPageuvChatByProducttype?actionday="+$actionday+"&producttype=二手房挂牌",
                                     type: "get",
                                     dataType: "JSON",
@@ -515,7 +514,7 @@
 
                                 $.ajax({
 
-                                    url:"/imstatics/getImStaticsPageuvChatByProducttype?actionday=20181201&producttype=家居挂牌",
+                                    url:"../imstatics/getImStaticsPageuvChatByProducttype?actionday=20181201&producttype=家居挂牌",
 //                                    url:"/imstatics/getImStaticsPageuvChatByProducttype?actionday="+$actionday+"&producttype=家居挂牌",
                                     type: "get",
                                     dataType: "JSON",
@@ -609,7 +608,7 @@
                 </div>
             </div>
             <div class="data-bd" style="margin-left: 56px;">
-                <div class="tit_con">全国一线城市的用户从详情页到点击房聊按钮的转换率<a href="/dataItem/im-uvcount-citys1" target="view_window">查看具体城市</a></div>
+                <div class="tit_con">全国一线城市的用户从详情页到点击房聊按钮的转换率<a href="../dataItem/im-uvcount-citys1" target="view_window">查看具体城市</a></div>
 
                 <div name="table" style="height:400px;width: 20%;float: left">
                     <TABLE class="table table-hover" id="table1">
@@ -642,7 +641,7 @@
                             $.ajax({
 //                                url:"/imstatics/getcitycount1?actionday="+$starttime+","+$endtime+"&city="+$city,
 //                                url:"/imstatics/getcitycount1?actionday=20181201,20181212&city=上海,北京,广州,深圳",
-                                url:"/imstatics/getcitycount1?actionday="+$actionday+","+$actionday+"&city=北京,上海,广州,深圳,天津,武汉,成都,南京,青岛,杭州,重庆",
+                                url:"../imstatics/getcitycount1?actionday="+$actionday+","+$actionday+"&city=北京,上海,广州,深圳,天津,武汉,成都,南京,青岛,杭州,重庆",
                                 type :"get",
                                 dataType : "JSON",
                                 data : {},
@@ -702,7 +701,7 @@
 
             </div>
             <div class="data-bd" style="margin-top: 450px;margin-left: 56px;">
-                <div class="tit_con">全国各个业务线的用户从详情页到点击房聊按钮的转换率<a href="/dataItem/im-uvcount-services1" target="view_window">查看具体城市</a></div>
+                <div class="tit_con">全国各个业务线的用户从详情页到点击房聊按钮的转换率<a href="../dataItem/im-uvcount-services1" target="view_window">查看具体城市</a></div>
                 <div name="table" style="height:400px;width: 20%;float: left">
                     <TABLE class="table table-hover" id="table2">
                         <THEAD>
@@ -731,7 +730,7 @@
 //                            var $endtime =$("#endtime").val().replace("-","").replace("-","");
 
                             $.ajax({
-                                url:"/imstatics/getonecitycount2?actionday="+$actionday+","+$actionday+"&city=",
+                                url:"../imstatics/getonecitycount2?actionday="+$actionday+","+$actionday+"&city=",
                                 type :"get",
                                 dataType : "JSON",
                                 data : {},
@@ -837,7 +836,7 @@
 
                             $.ajax({
 //                                url:"/imstatics/getonecitycount2?actionday=20181201,20181212&city=",
-                                url:"/imstatics/getclickpercentrankbybusiness4?actionday="+$actionday+"&platform=APP&business=新房挂牌&limit=10",
+                                url:"../imstatics/getclickpercentrankbybusiness4?actionday="+$actionday+"&platform=APP&business=新房挂牌&limit=10",
                                 type :"get",
                                 dataType : "JSON",
                                 data : {},
@@ -900,7 +899,7 @@
             <div class="data-bd" style="margin-top: 450px;margin-left: 56px;">
                 <div class="tit_con">APP新房楼盘聊天数排行</div>
                 <div name="table" style="height:400px;width: 34%;float: left">
-                    <TABLE class="table table-hover" id="table4">
+                    <TABLE class="table table-hover" id="table5">
                         <THEAD>
                         <TR>
                             <TH class=var>楼盘名</TH>
@@ -924,7 +923,7 @@
 //                            var $endtime =$("#endtime").val().replace("-","").replace("-","");
                         $.ajax({
 //                                url:"/imstatics/getonecitycount2?actionday=20181201,20181212&city=",
-                            url:"/imstatics/getAPPNewHouseUV?actionday="+$actionday+","+$actionday,
+                            url:"../imstatics/getAPPNewHouseUV?actionday="+$actionday+","+$actionday,
 //                            url:"/imstatics/getAPPNewHouseUV?actionday=20181201,20181201",
                             type :"get",
                             dataType : "JSON",
@@ -977,10 +976,6 @@
                                 /*]]>*/
                             }
                         })
-
-
-
-
 
                     }
 

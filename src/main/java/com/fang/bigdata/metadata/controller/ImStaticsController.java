@@ -1,5 +1,6 @@
 package com.fang.bigdata.metadata.controller;
 
+import com.fang.bigdata.metadata.commons.ImStaticsRetBeanCount;
 import com.fang.bigdata.metadata.entity.imstatics.*;
 import com.fang.bigdata.metadata.service.ImStaticsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,4 +186,24 @@ public class ImStaticsController {
         return imStaticsService.getImStaticsPageuvChatByProducttype(actionday, producttype);
     }
 
+    /**
+     *
+     * 全国楼盘平均聊天数和一线城市楼盘聊天数对比
+     */
+    @RequestMapping("/getLoupanAvgUv")
+    public Object getLoupanAvgUv(String actionday, String city){
+        if (actionday == null || city == null)
+            throw new RuntimeException("参数异常");
+        return imStaticsService.getLoupanAvgUv(actionday,city);
+    }
+
+    /**
+     * 某城市楼盘平均聊天数和楼盘聊天数对比
+     */
+    @RequestMapping("/getLoupanAvgUvBycity")
+    public Object getLoupanAvgUvBycity(String actionday, String city){
+        if (actionday == null || city == null)
+            throw new RuntimeException("参数异常");
+        return imStaticsService.getLoupanAvgUvBycity(actionday, city);
+    }
 }

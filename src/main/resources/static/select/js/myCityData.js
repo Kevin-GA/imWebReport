@@ -1,6 +1,6 @@
 var myCityData= '';
 $.ajax({
-    url:"/getCitys1",
+    url:"../getCitys1",
     type :"get",
     dataType : "JSON",
     data : {},

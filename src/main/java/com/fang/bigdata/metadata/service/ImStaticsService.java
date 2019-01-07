@@ -44,4 +44,14 @@ public interface ImStaticsService {
     List<ProjnameImEntity> getTop10UvCountByProjName(String actionday);
 
     List<ImStaticsPageuvChat> getImStaticsPageuvChatByProducttype(String actionDay, String producttype);
+
+/**
+ * 全国楼盘平均聊天数和一线城市楼盘聊天数对比
+ */
+    ImStaticsRetBeanCount getLoupanAvgUv(String actionday,String city);
+
+    /**
+     * 某城市楼盘平均聊天数和楼盘聊天数对比
+     */
+    ImStaticsRetBeanCount getLoupanAvgUvBycity(String actionday,String city);
 }

@@ -16,7 +16,7 @@
 <script>
     $(function(){
         $.ajax({
-            url:"/getCitys",
+            url:"../getCitys",
             type :"get",
             dataType : "JSON",
             data : {},
@@ -72,7 +72,7 @@
         var $city = $("#city").val();
 //        var $imChatMessageType = $("#imChatMessageType").val();
         $.ajax({
-            url:"/getImAnalyseCount",
+            url:"../getImAnalyseCount",
             type :"get",
             dataType : "JSON",
             data : {
@@ -99,7 +99,7 @@
         var $city = $("#city").val();
 //        var $imChatMessageType = $("#imChatMessageType").val();
         $.ajax({
-            url:"/getImAnalysePages",
+            url:"../getImAnalysePages",
             type :"get",
             dataType : "JSON",
             data : {
@@ -136,7 +136,7 @@
 
     function addQX(){
         $.ajax({
-            url:"/getQX",
+            url:"../getQX",
             type :"get",
             dataType : "JSON",
             data : {
@@ -157,7 +157,7 @@
     }
     function addSQ(){
         $.ajax({
-            url:"/getSQ",
+            url:"../getSQ",
             type :"get",
             dataType : "JSON",
             data : {

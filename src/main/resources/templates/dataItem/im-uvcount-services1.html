@@ -20,7 +20,7 @@
         })
 
         $("#count_time").click(function(){
-            window.open("/dataItem/im-uvcount-times");
+            window.open("../dataItem/im-uvcount-times");
         })
     })
 
@@ -56,7 +56,7 @@
     function loadCitys(){
 //        var cityData1;
         $.ajax({
-            url:"/getCitys1",
+            url:"../getCitys1",
             type :"get",
             dataType : "JSON",
             data : {},
@@ -198,7 +198,7 @@
                             var $city = $("#cityMR").html();
                             var $business = $("#imServiceType").val();
                             $.ajax({
-                                url:"/imstatics/getcitycount1?actionday="+$starttime+","+$endtime+"&city="+$city+"&business="+$business,
+                                url:"../imstatics/getcitycount1?actionday="+$starttime+","+$endtime+"&city="+$city+"&business="+$business,
 //                                url:"/imstatics/getcitypercentage1?actionday="+$starttime+","+$endtime+"&city="+$city,
 //                                url:"/imstatics/getonecitypercentage2?actionday="+$starttime+","+$endtime+"&city="+$("#city").val(),
                                 type :"get",

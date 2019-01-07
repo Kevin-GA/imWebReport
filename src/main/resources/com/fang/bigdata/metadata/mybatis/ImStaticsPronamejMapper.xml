@@ -15,4 +15,47 @@
         group by a.projname,a.city
         order by imchats desc limit 10
     </select>
+
+    <select id="getAvgShopidUv" resultType="java.lang.Double">
+      select  avg(counts) from(
+        select customcity as customcity ,count(distinct(im_chat_message_messageid)) as counts
+        from dwd.dwd_effect_im_message
+        where logday <![CDATA[>= ]]> #{startDay} and logday <![CDATA[<= ]]> #{endDay}
+        group by customcity
+        order by customcity
+        )as a
+    </select>
+
+    <select id="getAvgShopidUvByCity" parameterType="java.util.Map" resultType="com.fang.bigdata.metadata.entity.imstatics.ImShopUv">
+        select customcity as city,count(distinct(im_chat_message_messageid)) as uvcount
+        from dwd.dwd_effect_im_message
+        where logday <![CDATA[>= ]]> #{startDay} and logday <![CDATA[<= ]]> #{endDay}
+        and customcity  IN
+        <foreach collection="citys" open="(" close=")" separator="," item="city">
+            #{city}
+        </foreach>
+        group by customcity
+        order by uvcount desc,customcity
+    </select>
+
+    <select id="getAvgLoupanUv" parameterType="java.util.Map"  resultType="java.lang.Double">
+      select  avg(counts) from(
+        select im_chat_message_shopid,count(distinct(im_chat_message_messageid)) as counts
+        from dwd_effect_im_message
+        where logday <![CDATA[>= ]]> #{startDay} and logday <![CDATA[<= ]]> #{endDay}
+        and customcity = #{city} and im_chat_message_shopid is not null
+        group by im_chat_message_shopid
+        order by counts desc
+      )as a
+    </select>
+
+    <select id="getAvgLoupanUvByCity" parameterType="java.util.Map" resultType="com.fang.bigdata.metadata.entity.imstatics.ImShopUv">
+      select im_chat_message_shopid as shopid,count(distinct(im_chat_message_messageid)) as uvcount
+      from dwd_effect_im_message
+      where logday <![CDATA[>= ]]> #{startDay} and logday <![CDATA[<= ]]> #{endDay}
+      and customcity = #{city} and im_chat_message_shopid is not null
+      group by im_chat_message_shopid
+      order by uvcount desc ,im_chat_message_shopid
+      limit 100
+    </select>
 </mapper>

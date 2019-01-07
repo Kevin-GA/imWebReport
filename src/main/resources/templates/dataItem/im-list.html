@@ -17,7 +17,7 @@
     $(function(){
         $("#passportid").val((GetQueryString("passportid")));
         $.ajax({
-            url:"/getCitys",
+            url:"../getCitys",
             type :"get",
             dataType : "JSON",
             data : {},
@@ -73,7 +73,7 @@
         var $city = $("#city").val();
         var $imChatMessageType = $("#imChatMessageType").val();
         $.ajax({
-            url:"/getDwdEffectImPersonimPageCount",
+            url:"../getDwdEffectImPersonimPageCount",
             type :"get",
             dataType : "JSON",
             data : {
@@ -104,7 +104,7 @@
         var $city = $("#city").val();
         var $imChatMessageType = $("#imChatMessageType").val();
         $.ajax({
-            url:"/getDwdEffectImPersonimPage",
+            url:"../getDwdEffectImPersonimPage",
             type :"get",
             dataType : "JSON",
             data : {
@@ -130,7 +130,7 @@
                         taskHtml += '<td>' + data[i].sendtoSendtouser + '</td>';
                         taskHtml += '<td>' + data[i].imChatMessageMessage + '</td>';
                         taskHtml += '<td style="display: none">' + data[i].logday + '</td>';
-                        taskHtml += '<td> <a href="/im-more/'+data[i].imChatMessageMessageid+'/'+data[i].logday+'"target="view_window">详情</a></td>';
+                        taskHtml += '<td> <a href="../im-more/'+data[i].imChatMessageMessageid+'/'+data[i].logday+'"target="view_window">详情</a></td>';
                         taskHtml += '</tr>';
                     }
                     $('#myTable tbody').html(taskHtml);
