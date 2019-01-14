@@ -3,8 +3,22 @@
 <head th:replace="common2000::commonHeader('im首页')"></head>
 <!--<script type="text/javascript" th:src="@{/js/jquery-1.7.2.min.js}"></script>-->
 <BODY class=technology-integr style="max-width: 1000px"><!-- 头部 S -->
-<SCRIPT>var _speedMark = Date.now()</SCRIPT>
 <SCRIPT>
+    var _speedMark = Date.now();
+    (function (win) {
+        var wH = window.innerWidth;
+        var body = document.body;
+        if (wH > 1400) {
+            body.style.maxWidth = '1400px';
+        } else if (window.innerWidth >= 1200) {
+            body.style.maxWidth = '1200px';
+        }else {
+            body.style.maxWidth = '1000px';
+        }
+    })(window);
+</SCRIPT>
+<SCRIPT>
+
     $(function () {
         $(".showPopUpJS").mouseover(function () {
             $(this).addClass("show-dropdown-body");
@@ -25,10 +39,35 @@
         addTable3();
         addTable4();
 
-
         $("#to-im-list").click(function(){
-            window.open("../dataItem/im-list");
+            window.parent.dmp_util.toHref({
+                name: '会话列表页',
+                href: 'http://bigdata.fang.com/meta/dataItem/im-list'
+            });
+//            window.open("../dataItem/im-list");
         })
+        $("#to-im-analyse-list").click(function(){
+            window.parent.dmp_util.toHref({
+                name: '有反馈会话列表页',
+                href: 'http://bigdata.fang.com/meta/dataItem/im-analyse-list'
+            });
+//            window.open("../dataItem/im-analyse-list");
+        })
+        $("#to-uvcount-citys1").click(function(){
+            window.parent.dmp_util.toHref({
+                name: '单个城市转化分业务',
+                href: 'http://bigdata.fang.com/meta/dataItem/im-uvcount-citys1'
+            });
+//            window.open("../dataItem/im-uvcount-citys1");
+        })
+        $("#to-uvcount-services1").click(function(){
+            window.parent.dmp_util.toHref({
+                name: '全国转化分城市',
+                href: 'http://bigdata.fang.com/meta/dataItem/im-uvcount-services1'
+            });
+//            window.open("../dataItem/im-uvcount-services1");
+        })
+
         $('.wenhao').hover(function(){
             $(this).find('.wenhao-alert').css('visibility','visible');
         },function(){
@@ -171,11 +210,12 @@
 
 </DIV>
 <!-- 头部 E --><!-- 内容 [[ -->
-<DIV class="container wrap" style="width: 100%">
+<!--<DIV class="container wrap" style="width: 100%">-->
     <!-- 侧边栏 [[ -->
     <!--<DIV th:include="common2000::commonNav(3,'im首页')" class=sidebar>-->
 
-    </DIV><!-- 侧边栏 ]] --><!-- 主区域 [[ -->
+    <!--</DIV>-->
+<!-- 侧边栏 ]] --><!-- 主区域 [[ -->
     <!--<DIV id=art-content class=content style="width: 85%">&lt;!&ndash; 内容 [[ &ndash;&gt;-->
         <STYLE>.add SPAN {
             CURSOR: pointer;
@@ -205,7 +245,7 @@
         display: block;
         width: 15px;
         height: 15px;
-        background: url(/img/sprite.png) -59px -1px;
+        background: url(../img/sprite.png) -59px -1px;
         }
         .wenhao .wenhao-alert, .wenhao .wenhao-alert {
             position: absolute;
@@ -221,7 +261,7 @@
             border: 1px solid #ddd;
             border-radius: 3px;
             background-color: #fff;
-            background: url(/img/jiao1.png);
+            background: url(../img/jiao1.png);
             font-size:12px;
             line-height: 16px;
         }
@@ -283,9 +323,9 @@
                     <li><span class="icon_hh"  th:alt="昨日进入IM数据库的会话数按照发送者和接收者作为会话基本单位" name="sessionCount">122,321</span></li>
                     <li style="cursor:pointer">会话总数</li>
                 </ul>
-                <ul>
+                <ul id="to-im-analyse-list">
                     <li><span class="icon_fk"    th:title="昨日进入IM数据库的会话数B端业务有反馈的" name="validSessionCount">75,521</span></li>
-                    <li>有反馈会话数</li>
+                    <li style="cursor:pointer">有反馈会话数</li>
 
                 </ul>
                 <ul class="bor_none">
@@ -606,10 +646,11 @@
                     <!--</div>-->
                 </div>
             </div>
-            <div class="data-bd" style="margin-left: 56px;">
-                <div class="tit_con">全国一线城市的用户从详情页到点击房聊按钮的转换率<a href="../dataItem/im-uvcount-citys1" target="view_window">查看具体城市</a></div>
+            <div class="data-bd" >
+                <!--<div class="tit_con">全国一线城市的用户从详情页到点击房聊按钮的转换率<a href="../dataItem/im-uvcount-citys1" target="view_window">查看具体城市</a></div>-->
+                <div class="tit_con">全国一线城市的用户从详情页到点击房聊按钮的转换率<a id="to-uvcount-citys1"  style="cursor:pointer">查看具体城市</a></div>
 
-                <div name="table" style="height:400px;width: 20%;float: left">
+                <div name="table" style="height:420px;width: 20%;float: left">
                     <TABLE class="table table-hover" id="table1">
                         <THEAD>
                         <TR>
@@ -699,8 +740,9 @@
                     </script>
 
             </div>
-            <div class="data-bd" style="margin-top: 450px;margin-left: 56px;">
-                <div class="tit_con">全国各个业务线的用户从详情页到点击房聊按钮的转换率<a href="../dataItem/im-uvcount-services1" target="view_window">查看具体城市</a></div>
+            <div class="data-bd" style="margin-top: 450px;">
+                <!--<div class="tit_con">全国各个业务线的用户从详情页到点击房聊按钮的转换率<a href="../dataItem/im-uvcount-services1" target="view_window">查看具体城市</a></div>-->
+                <div class="tit_con">全国各个业务线的用户从详情页到点击房聊按钮的转换率<a id="to-uvcount-services1" style="cursor:pointer">查看具体城市</a></div>
                 <div name="table" style="height:400px;width: 20%;float: left">
                     <TABLE class="table table-hover" id="table2">
                         <THEAD>
@@ -718,7 +760,7 @@
                         </tbody>
                     </TABLE>
                 </div>
-                <div  id="main2" style="height:400px;width: 80%;float: right"></div>
+                <div  id="main2" style="height:450px;width: 80%;float: right"></div>
                     <script>
                         function showCharts2(){
                             var $actionday=formateyesterday();
@@ -799,7 +841,7 @@
                     </script>
             </div>
 
-            <div class="data-bd" style="margin-top: 400px;margin-left: 56px;">
+            <div class="data-bd" style="margin-top: 450px;">
                 <div class="tit_con">APP新房个各页面房聊按钮点击人数排行</div>
                 <div name="table" style="height:400px;width: 34%;float: left">
                     <TABLE class="table table-hover" id="table3">
@@ -895,7 +937,7 @@
 
 
 
-            <div class="data-bd" style="margin-top: 450px;margin-left: 56px;">
+            <div class="data-bd" style="margin-top: 450px;">
                 <div class="tit_con">APP新房楼盘聊天数排行</div>
                 <div name="table" style="height:400px;width: 34%;float: left">
                     <TABLE class="table table-hover" id="table4">

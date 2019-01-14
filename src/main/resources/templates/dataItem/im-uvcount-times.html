@@ -6,7 +6,21 @@
 
 </head>
 
-<SCRIPT>var _speedMark = Date.now()</SCRIPT>
+<BODY class=technology-integr style="max-width: 1000px"><!-- 头部 S -->
+<SCRIPT>
+    var _speedMark = Date.now();
+    (function (win) {
+        var wH = window.innerWidth;
+        var body = document.body;
+        if (wH > 1400) {
+            body.style.maxWidth = '1400px';
+        } else if (window.innerWidth >= 1200) {
+            body.style.maxWidth = '1200px';
+        }else {
+            body.style.maxWidth = '1000px';
+        }
+    })(window);
+</SCRIPT>
 <script>
     $(function(){
         $.ajax({

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.bigdata.metadata.daoimpala.PassportInfoMapper">
+  <resultMap id="BaseResultMap" type="com.fang.bigdata.metadata.entity.passport.BaseInfo">
+    <association property="formInfo" javaType="com.fang.bigdata.metadata.entity.passport.FormInfo">
+      <result column="form_pre" jdbcType="VARCHAR" property="formPre" />
+      <result column="form_fromuser" jdbcType="VARCHAR" property="formFromuser" />
+      <result column="im_chat_message_clienttype" jdbcType="VARCHAR" property="imChatMessageClienttype" />
+      <result column="fromuser_passportid_telauthentication" jdbcType="VARCHAR" property="fromuserPassportidTelauthentication" />
+      <result column="fromuser_bid_registertime" jdbcType="VARCHAR" property="fromuserBidRegistertime" />
+      <result column="fromuser_bid_companyname" jdbcType="VARCHAR" property="fromuserBidCompanyname" />
+      <result column="fromuser_bid_authentication" jdbcType="VARCHAR" property="fromuserBidAuthentication" />
+      <result column="fromuser_bid_group" jdbcType="VARCHAR" property="fromuserBidGroup" />
+      <result column="fromuser_bid" jdbcType="VARCHAR" property="fromuserBid" />
+
+      <result column="oafrom_resourceid" jdbcType="VARCHAR" property="oafromResourceid" />
+      <result column="oafrom_oa_lastname" jdbcType="VARCHAR" property="oafromOaLastname" />
+      <result column="oafrom_oa_manager" jdbcType="VARCHAR" property="oafromOaManager" />
+      <result column="oafrom_oa_supsubcompany" jdbcType="VARCHAR" property="oafromOaSupsubcompany" />
+      <result column="oafrom_oa_subcompany" jdbcType="VARCHAR" property="oafromOaSubcompany" />
+      <result column="oafrom_oa_department" jdbcType="VARCHAR" property="oafromOaDepartment" />
+      <result column="fromuser_bid_city" jdbcType="VARCHAR" property="fromuserBidCity" />
+    </association>
+    <association property="sendtoInfo" javaType="com.fang.bigdata.metadata.entity.passport.SendtoInfo">
+      <result column="sendto_sendtouser" jdbcType="VARCHAR" property="sendtoSendtouser" />
+      <result column="sendto_pre" jdbcType="VARCHAR" property="sendtoPre" />
+      <result column="sendtouser_passportid_telauthentication" jdbcType="VARCHAR" property="sendtouserPassportidTelauthentication" />
+      <result column="sendtouser_bid" jdbcType="VARCHAR" property="sendtouserBid" />
+      <result column="sendtouser_bid_registertime" jdbcType="VARCHAR" property="sendtouserBidRegistertime" />
+      <result column="sendtouser_bid_authentication" jdbcType="VARCHAR" property="sendtouserBidAuthentication" />
+      <result column="sendtouser_bid_group" jdbcType="VARCHAR" property="sendtouserBidGroup" />
+
+      <result column="oato_resourceid" jdbcType="VARCHAR" property="oatoResourceid" />
+      <result column="oato_oa_lastname" jdbcType="VARCHAR" property="oatoOaLastname" />
+      <result column="oato_oa_manager" jdbcType="VARCHAR" property="oatoOaManager" />
+      <result column="oato_oa_supsubcompany" jdbcType="VARCHAR" property="oatoOaSupsubcompany" />
+      <result column="oato_oa_subcompany" jdbcType="VARCHAR" property="oatoOaSubcompany" />
+      <result column="oato_oa_department" jdbcType="VARCHAR" property="oatoOaDepartment" />
+      <result column="sendtouser_bid_city" jdbcType="VARCHAR" property="sendtouserBidCity" />
+    </association>
+    <association property="messageInfo" javaType="com.fang.bigdata.metadata.entity.passport.MessageInfo">
+      <result column="im_chat_message_message" jdbcType="VARCHAR" property="imChatMessageMessage" />
+      <result column="im_chat_message_messagetime" jdbcType="VARCHAR" property="imChatMessageMessagetime" />
+      <result column="im_chat_message_city" jdbcType="VARCHAR" property="imChatMessageCity" />
+      <result column="im_chat_message_shopid" jdbcType="VARCHAR" property="imChatMessageShopid" />
+      <result column="im_chat_message_houseid" jdbcType="VARCHAR" property="imChatMessageHouseid" />
+    </association>
+
+
+  </resultMap>
+  <sql id="form_Column_List">
+    form_pre ,im_chat_message_form ,im_chat_message_clienttype,fromuser_passportid_telauthentication,fromuser_bid_registertime,
+    fromuser_bid_companyname,fromuser_bid_authentication,fromuser_bid_group,fromuser_bid,oafrom_resourceid,oafrom_oa_lastname,
+    oafrom_oa_manager,oafrom_oa_supsubcompany,oafrom_oa_subcompany,oafrom_oa_department,fromuser_bid_city
+  </sql>
+  <sql id="sendto_Column_List">
+    sendto_sendtouser ,sendto_pre,sendtouser_passportid_telauthentication,sendtouser_bid,sendtouser_bid_registertime,
+    sendtouser_bid_authentication,sendtouser_bid_group,
+    oato_resourceid,oato_oa_lastname,oato_oa_manager,oato_oa_supsubcompany,oato_oa_subcompany,oato_oa_department,
+    sendtouser_bid_city
+  </sql>
+  <sql id="message_Column_List">
+    im_chat_message_message,im_chat_message_messagetime,im_chat_message_city,im_chat_message_shopid,im_chat_message_houseid
+  </sql>
+
+  <select id="queryBypassortid"  resultMap="BaseResultMap" parameterType="java.util.Map">
+    select <include refid="form_Column_List"/>,
+    <include refid="sendto_Column_List"/>,
+    <include refid="message_Column_List"/>
+    from dwd.dwd_effect_im_message
+    where 1=1
+    <if test='passportid != null and passportid != "" '>
+      and (sendtouser_passportid = #{passportid} or fromuser_passportid = #{passportid})
+    </if>
+    order by logday desc
+    limit #{limitnum}
+  </select>
+</mapper>

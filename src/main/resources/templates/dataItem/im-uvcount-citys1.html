@@ -6,11 +6,25 @@
 
 </head>
 
-<SCRIPT>var _speedMark = Date.now()</SCRIPT>
+<BODY class=technology-integr style="max-width: 1000px"><!-- 头部 S -->
+<SCRIPT>
+    var _speedMark = Date.now();
+    (function (win) {
+        var wH = window.innerWidth;
+        var body = document.body;
+        if (wH > 1400) {
+            body.style.maxWidth = '1400px';
+        } else if (window.innerWidth >= 1200) {
+            body.style.maxWidth = '1200px';
+        }else {
+            body.style.maxWidth = '1000px';
+        }
+    })(window);
+</SCRIPT>
 <script>
     $(function(){
         $.ajax({
-            url:"/getCitys",
+            url:"../getCitys",
             type :"get",
             dataType : "JSON",
             data : {},
@@ -30,7 +44,11 @@
         })
 
         $("#count_time").click(function(){
-            window.open("/dataItem/im-uvcount-times")
+            window.parent.dmp_util.toHref({
+                name: '城市业务转化量随时间变化',
+                href: 'http://bigdata.fang.com/meta/dataItem/im-uvcount-times'
+            });
+//            window.open("../dataItem/im-uvcount-times")
         })
     })
 
@@ -71,7 +89,7 @@
 
     function loadBestTimeInfo(){
         $.ajax({
-            url:"/getuvInBestHour",
+            url:"../getuvInBestHour",
             type :"get",
             dataType : "JSON",
             data : {
@@ -90,7 +108,7 @@
             }
         })
         $.ajax({
-            url:"/getuvInBestWeek",
+            url:"../getuvInBestWeek",
             type :"get",
             dataType : "JSON",
             data : {
@@ -121,10 +139,9 @@
         r = null;
         return context == null || context == "" || context == "undefined" ? "" : context;
     }
-    // 设置domain
-    document.domain = 'fang.com';
+
 </script>
-<DIV class=header th:include="common::commontop" style="height: 60px">
+<!--<DIV class=header th:include="common::commontop" style="height: 60px">-->
 
 </DIV><!-- 头部 E --><!-- 内容 [[ -->
 <!-- 主区域 [[ -->
@@ -231,7 +248,7 @@
                             $.ajax({
 //                                url:"/imstatics/getcitypercentage1?actionday="+$starttime+","+$endtime+"&city="+$("#city").val(),
 //                                url:"/imstatics/getonecitypercentage2?actionday="+$starttime+","+$endtime+"&city="+$city,
-                                url:"/imstatics/getonecitycount2?actionday="+$starttime+","+$endtime+"&city="+$city,
+                                url:"../imstatics/getonecitycount2?actionday="+$starttime+","+$endtime+"&city="+$city,
                                 type :"get",
                                 dataType : "JSON",
                                 data : {},
