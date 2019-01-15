@@ -45,12 +45,12 @@
         $("#starttime").val(formateyesterday());
         $("#endtime").val(formateyesterday());
 
-        addPageData();
+        addPageData(1);
         addCount();
 
         $("#search_btn").click(function(){
 //            alert($("#shopId").val());
-            addPageData();
+            addPageData(1);
             addCount();
         })
     })
@@ -90,8 +90,8 @@
             type :"get",
             dataType : "JSON",
             data : {
-                startTime:$("#starttime").val().replace("-","").replace("-",""),
-                endTime:$("#endtime").val().replace("-","").replace("-",""),
+                startTime:$("#starttime").val(),
+                endTime:$("#endtime").val(),
                 city: $city,
                 qx:$("#qx").val(),
                 sq:$("#sq").val(),
@@ -112,10 +112,11 @@
             }
         })
     }
-    function addPageData(){
+    function addPageData(pageNum){
 //        var $city = $("#city").val()==null ? "上海":$("#city").val();
         var $city = $("#city").val();
         var $imChatMessageType = $("#imChatMessageType").val();
+
         $.ajax({
             url:"../getDwdEffectImPersonimPage",
             type :"get",
@@ -128,27 +129,42 @@
                 sq:$("#sq").val(),
                 passportid:$("#passportid").val(),
                 imChatMessageType:$imChatMessageType,
-                pageNum: 1,
+                pageNum: pageNum,
                 pageSize: 50,
                 imChatMessageShopid: $("#shopId").val(),
             }, success: function(data){
-                for(var i=0;i<data.length;i++){
-                    var taskHtml = '';
-                    for (i = 0; i < data.length; i++) {
-                        taskHtml += '<tr >';
-                        taskHtml += '<td style="display: none" class="im-more">' + data[i].imChatMessageMessageid + '</td>';
-                        taskHtml += '<td>' + data[i].imChatMessageMessagetime + '</td>';
-                        taskHtml += '<td><a href="http://interface.bigdata.test.fang.com/profile/personalpage/main.do?type=PID&typeValue='+data[i].fromuserPassportid+'&bussiness=%E6%96%B0%E6%88%BF&city=" target="view_window">' + data[i].formFromuser + '</a></td>';
-                        taskHtml += '<td>' + data[i].imChatMessageClienttype + '</td>';
-                        taskHtml += '<td>' + data[i].sendtoSendtouser + '</td>';
-                        taskHtml += '<td>' + data[i].imChatMessageMessage + '</td>';
-                        taskHtml += '<td style="display: none">' + data[i].logday + '</td>';
-                        taskHtml += '<td> <a href="../im-more/'+data[i].imChatMessageMessageid+'/'+data[i].logday+'"target="view_window">详情</a></td>';
-                        taskHtml += '</tr>';
-                    }
-                    $('#myTable tbody').html(taskHtml);
-                    tableClick();
+                var taskHtml = '';
+                for (i = 0; i < data.recordList.length; i++) {
+                    taskHtml += '<tr >';
+                    taskHtml += '<td style="display: none" class="im-more">' + data.recordList[i].imChatMessageMessageid + '</td>';
+                    taskHtml += '<td>' + data.recordList[i].imChatMessageMessagetime + '</td>';
+                    taskHtml += '<td><a href="http://interface.bigdata.test.fang.com/profile/personalpage/main.do?type=PID&typeValue='+data.recordList[i].fromuserPassportid+'&bussiness=%E6%96%B0%E6%88%BF&city=" target="view_window">' + data.recordList[i].formFromuser + '</a></td>';
+                    taskHtml += '<td>' + data.recordList[i].imChatMessageClienttype + '</td>';
+                    taskHtml += '<td>' + data.recordList[i].sendtoSendtouser + '</td>';
+                    taskHtml += '<td>' + data.recordList[i].imChatMessageMessage + '</td>';
+                    taskHtml += '<td style="display: none">' + data.recordList[i].logday + '</td>';
+                    taskHtml += '<td> <a href="../im-more/'+data.recordList[i].imChatMessageMessageid+'/'+data.recordList[i].logday+'"target="view_window">详情</a></td>';
+                    taskHtml += '</tr>';
                 }
+                $('#myTable tbody').html(taskHtml);
+                var pagehtml = '<li><a href="javascript:void(0)" onclick="addPageData('+(pageNum-1>0?pageNum-1:1)+')">&laquo;</a></li>';
+                for(i = data.beginPageIndex; i <= data.endPageIndex; i++){
+                    if(i==pageNum){
+                        pagehtml+='<li class="active"><a href="javascript:void(0)" onclick="addPageData('+i+')">'+i+'</a></li>';
+                    }else{
+                        pagehtml+='<li ><a href="javascript:void(0)" onclick="addPageData('+i+')">'+i+'</a></li>';
+                    }
+
+                }
+//                    '<li><a href="javascript:void(0)" onclick="addPageData('+data.beginPageIndex+')">'+data.beginPageIndex+'</a></li>'
+//                    '<li><a href="javascript:void(0)" onclick="addPageData('+data.endPageIndex+')">'+data.endPageIndex+'</a></li>'
+                    pagehtml+= '<li><a href="javascript:void(0)" onclick="addPageData('+(pageNum+1>data.pageCount?data.pageCount:pageNum+1)+')">&raquo;</a></li>';
+                console.info(pagehtml);
+                console.info(data.recordCount);
+                console.info(data.pageCount);
+                console.info(data.beginPageIndex);
+                console.info(data.endPageIndex);
+                $("#pagenum").html(pagehtml);
             }, error: function () {
                 alert("获取数据失败", "error");
             }
@@ -205,6 +221,10 @@
         reg = null;
         r = null;
         return context == null || context == "" || context == "undefined" ? "" : context;
+    }
+
+    function loadpageinfo(){
+
     }
 
     function tableClick() {
@@ -357,6 +377,16 @@
 
                             </tbody>
                         </TABLE>
+
+                        <ul class="pagination" style="margin-left: 80%" id="pagenum">
+                            <li><a href="javascript:void(0)" onclick="addPageData()">&laquo;</a></li>
+                            <li class="active"><a href="javascript:void(0)" onclick="addPageData(1)">1</a></li>
+                            <li><a href="javascript:void(0)" onclick="addPageData(2)">2</a></li>
+                            <li><a href="javascript:void(0)" onclick="addPageData(3)">3</a></li>
+                            <li class="disabled"><a href="javascript:void(0)">...</a></li>
+                            <li><a href="javascript:void(0)" onclick="addPageData(5)">5</a></li>
+                            <li><a href="javascript:void(0)" onclick="addPageData()">&raquo;</a></li>
+                        </ul>
 
                     </DIV>
                 </DIV>

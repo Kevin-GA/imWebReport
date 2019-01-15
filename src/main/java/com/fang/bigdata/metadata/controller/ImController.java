@@ -1,5 +1,6 @@
 package com.fang.bigdata.metadata.controller;
 
+import com.fang.bigdata.metadata.commons.PageBean;
 import com.fang.bigdata.metadata.entity.DwdEffectImMessage;
 import com.fang.bigdata.metadata.entity.ImCity;
 import com.fang.bigdata.metadata.entity.imstatics.ImAnalyse;
@@ -216,7 +217,9 @@ public class ImController {
      */
     @RequestMapping(value="/getDwdEffectImPersonimPage",method = RequestMethod.GET)
     @ResponseBody
-    List<DwdEffectImMessage> getByPage(String startTime, String endTime, String city,String qx,String sq,String passportid,String imChatMessageType, Integer pageNum, Integer pageSize, String imChatMessageShopid){
+    PageBean getByPage(String startTime, String endTime, String city, String qx, String sq, String passportid, String imChatMessageType, Integer pageNum, Integer pageSize, String imChatMessageShopid){
+
+
         List<DwdEffectImMessage> dwdEffectImMessages = dwdEffectImMessageService.queryPages(startTime.replaceAll("-", ""), endTime.replaceAll("-", ""), city,qx,sq,passportid, imChatMessageType, pageNum, pageSize,imChatMessageShopid);
         for (DwdEffectImMessage d: dwdEffectImMessages)
         {
@@ -228,7 +231,9 @@ public class ImController {
             }
 
         }
-        return dwdEffectImMessages;
+        int recordCount = dwdEffectImMessageService.queryPagesCount(startTime.replaceAll("-", ""), endTime.replaceAll("-", ""), city, qx, sq, passportid, imChatMessageType, imChatMessageShopid);
+        PageBean pageBean = new PageBean(pageNum, pageSize, dwdEffectImMessages, recordCount);
+        return pageBean;
     }
     /**
      * im-list列表页计数
@@ -241,7 +246,7 @@ public class ImController {
     @RequestMapping(value="/getDwdEffectImPersonimPageCount",method = RequestMethod.GET)
     @ResponseBody
     Integer getDwdEffectImPersonimPageCount(String startTime, String endTime, String city,String qx,String sq,String passportid, String imChatMessageType, String imChatMessageShopid){
-        return dwdEffectImMessageService.queryPagesCount(startTime, endTime, city,qx,sq,passportid, imChatMessageType, imChatMessageShopid);
+        return dwdEffectImMessageService.queryPagesCount(startTime.replaceAll("-", ""), endTime.replaceAll("-", ""), city,qx,sq,passportid, imChatMessageType, imChatMessageShopid);
     }
 
     @RequestMapping(value="/getuvInBestHour",method = RequestMethod.GET)
