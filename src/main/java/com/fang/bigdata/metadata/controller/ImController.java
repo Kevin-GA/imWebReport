@@ -300,7 +300,7 @@ public class ImController {
 
     @RequestMapping(value="/getImAnalysePages",method = RequestMethod.GET)
     @ResponseBody
-    public List<ImAnalyse> getImAnalysePages(String startTime, String endTime, String city, String pagetype, String producttype, Integer pageNum, Integer pageSize){
+    PageBean getImAnalysePages(String startTime, String endTime, String city, String pagetype, String producttype, Integer pageNum, Integer pageSize){
         List<ImAnalyse> imAnalyses = imAnalyseService.queryPages(startTime.replaceAll("-", ""), endTime.replaceAll("-", ""), city, pagetype, producttype, pageNum, pageSize);
         for(ImAnalyse im:imAnalyses){
             String contents = im.getContents();
@@ -309,13 +309,15 @@ public class ImController {
                 im.setContents(s);
             }
         }
-        return imAnalyses;
+        Integer recordCount = imAnalyseService.queryCount(startTime.replaceAll("-", ""), endTime.replaceAll("-", ""), city, pagetype, producttype);
+        PageBean pageBean = new PageBean(pageNum, pageSize, imAnalyses, recordCount);
+        return pageBean;
     }
 
     @RequestMapping(value="/getImAnalyseCount",method = RequestMethod.GET)
     @ResponseBody
     Integer getImAnalyseCount(String startTime, String endTime, String city, String pagetype, String producttype){
-        return imAnalyseService.queryCount(startTime, endTime, city, pagetype, producttype);
+        return imAnalyseService.queryCount(startTime.replaceAll("-", ""), endTime.replaceAll("-", ""), city, pagetype, producttype);
     }
 
     @RequestMapping(value = "/im-analyse-more/{imid}/{logday}",method = RequestMethod.GET)

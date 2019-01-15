@@ -147,6 +147,7 @@
                     taskHtml += '</tr>';
                 }
                 $('#myTable tbody').html(taskHtml);
+
                 var pagehtml = '<li><a href="javascript:void(0)" onclick="addPageData('+(pageNum-1>0?pageNum-1:1)+')">&laquo;</a></li>';
                 for(i = data.beginPageIndex; i <= data.endPageIndex; i++){
                     if(i==pageNum){
@@ -156,14 +157,7 @@
                     }
 
                 }
-//                    '<li><a href="javascript:void(0)" onclick="addPageData('+data.beginPageIndex+')">'+data.beginPageIndex+'</a></li>'
-//                    '<li><a href="javascript:void(0)" onclick="addPageData('+data.endPageIndex+')">'+data.endPageIndex+'</a></li>'
-                    pagehtml+= '<li><a href="javascript:void(0)" onclick="addPageData('+(pageNum+1>data.pageCount?data.pageCount:pageNum+1)+')">&raquo;</a></li>';
-                console.info(pagehtml);
-                console.info(data.recordCount);
-                console.info(data.pageCount);
-                console.info(data.beginPageIndex);
-                console.info(data.endPageIndex);
+                pagehtml+= '<li><a href="javascript:void(0)" onclick="addPageData('+(pageNum+1>data.pageCount?data.pageCount:pageNum+1)+')">&raquo;</a></li>';
                 $("#pagenum").html(pagehtml);
             }, error: function () {
                 alert("获取数据失败", "error");
