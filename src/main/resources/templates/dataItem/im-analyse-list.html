@@ -149,13 +149,17 @@
 
                 }
                 pagehtml+= '<li><a href="javascript:void(0)" onclick="addPageData('+(pageNum+1>data.pageCount?data.pageCount:pageNum+1)+')">&raquo;</a></li>';
+                $("#pagenum").html(pagehtml);
 
+                $(window).scrollTop(0);
                 tableClick();
             }, error: function () {
                 alert("获取数据失败", "error");
             }
         })
     }
+
+
 
     function addQX(){
         $.ajax({
